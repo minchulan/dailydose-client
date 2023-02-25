@@ -3,9 +3,15 @@ import { NavLink } from 'react-router-dom';
 
 const MedicationCard = ({ medication }) => {
     return (
-        <li>
-            <NavLink to={`/medications/${medication.id}`}>{medication.medication_name}</NavLink>
-        </li>
+        <div>
+            <h5>Name: {medication.medication_name}</h5>
+            <h5>Dose: {medication.dose} mg</h5>
+            <h5>Form: {medication.form}</h5>
+            <h5>Quantity: {medication.quantity}</h5>
+            <h5>Price: {medication.price}</h5>
+            <br />
+        </div>
+
     );
 }
 

@@ -1,11 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const PatientCard = ({name}) => {
-  return (
-      <ul>
-          <li>{name}</li>
-      </ul>
-  )
+const PatientCard = ({ patient }) => {
+    return (
+        <li> 
+            <NavLink to={`/patients/${patient.id}`}>
+                {patient.patient_name}  
+            </NavLink>  
+        </li> 
+    );
+
 }
 
 export default PatientCard
