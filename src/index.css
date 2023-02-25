@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(255, 255, 255);
+}
+
+nav a {
+  display: inline;
+  margin: 1rem 2rem;
+  text-decoration: none;
+  font-size: 1.2em;
+  color: rgb(9, 22, 207);
+  border-bottom: 2px solid rgb(9, 5, 231);
+  transition: 0.1s;
+}
+
+nav a:hover,
+nav a:active {
+  color: rgb(9, 12, 200);
+  border-bottom: 2px solid rgb(9, 6, 209);
+  background-color: rgb(193, 214, 255);
+
+}

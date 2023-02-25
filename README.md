@@ -1,6 +1,32 @@
-# Getting Started with Create React App
+## Daily Dose - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Daily Dose. Daily Dose is a fullstack web app built with ReactJS frontend and Sinatra-Ruby backend. The focus of this project is building a Sinatra API backend that uses Active Record to access and persist data in a database, which will be used by a separate React frontend that interacts with the database via the API. The frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Check out my backend: [Link to Backend Repo](https://github.com/minchulan/phase-3-sinatra-react-project)
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## 🔗 Links
+
+[![my_portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://github.com/minchulan)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/minchulan/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/itsminchul)
+
+## Installation
+
+To install, just fork and clone this repository. Once you cloned it in your terminal, make sure you `cd` into the correct folder.
+
+## Core Deliverables
+
+As a user:
+
+1. When the app starts on page load, dynamically render a list of Rx drugs.
+2. Add a new drug to the page by submitting the form.
+3. Delete a drug by clicking on the delete button, or trashcan icon. Change is persisted in the backend.
+4. Search for drugs by Rx drug name and see a filtered list of drugs on the page.
+5. "Favorite" and "unfavorite" a listing on the frontend by clicking the star icon. Rx drugs clicked as "favorite" renders using a Route that matches the path /favorites .
+
+## Example
+
+The screenshots below demonstrate the working functionality of the app.
 
 ## Available Scripts
 
