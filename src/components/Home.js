@@ -4,16 +4,14 @@ import { useHistory } from 'react-router-dom';
 const Home = () => {
     const history = useHistory();
     
-    const routeChange = () => {
-        history.push('/patients');
+    const routeChange = () => {       
+        history.push('/login');
     }
-
+        
     return (
         <div>
-            <br />
-            <br />
-            <h1>Patient & Medication Management</h1>
-            <p>Easily manage your patients and their medications</p>
+            <h1>The Pharmacy that really delivers</h1>
+            <p>With transparent pricing. Easy refills. Even savings for DailyDose Loyal members.</p>
             <button onClick={routeChange}>Get started</button>
         </div>
     );
