@@ -9,9 +9,10 @@ const Home = () => {
     }
         
     return (
-        <div>
+        <div className="home">
             <h1>The Pharmacy that really delivers</h1>
-            <p>With transparent pricing. Easy refills. Even savings for DailyDose Loyal members.</p>
+            <p>With transparent pricing. Easy refills. Even savings for Loyalty members.</p>
+            <br />
             <button onClick={routeChange}>Get started</button>
         </div>
     );

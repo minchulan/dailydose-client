@@ -28,8 +28,13 @@ const MedicationList = () => {
   return (
     <div className="medications">
       <br />
+      <br />
+      <br />
+      <br />
       <h2>Medications</h2>
+      <br />
       <h4>{<NavLink to="/medications/new">+ New </NavLink>}</h4>
+      <br />
       <p>{medicationCards}</p>
     </div>
   );

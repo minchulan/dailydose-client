@@ -13,7 +13,9 @@ const style = {
 
 const NavBar = () => {
   return (
-    <nav>
+    <nav className="NavBarItems">
+      <h1 className="navbar-logo">Daily Dose</h1>
+      <div className="menu-icon"></div>
       <NavLink
         activeStyle={{ fontWeight: "bolder" }}
         exact
@@ -21,14 +23,6 @@ const NavBar = () => {
         to="/"
       >
         Home
-      </NavLink>
-      <NavLink
-        activeStyle={{ fontWeight: "bolder" }}
-        exact
-        style={style}
-        to="/about"
-      >
-        About Us
       </NavLink>
       <NavLink
         activeStyle={{ fontWeight: "bolder" }}

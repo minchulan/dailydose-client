@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 const initialState = {
-  patient_name: "",
-  date_of_birth: "",
+  firstName: "",
+  lastName: "",
+  birthday: "",
   gender: "",
   allergies: "",
   address: "",
-  phone_number: "",
+  email: "",
+  phoneNumber: ""
 };
 
 const NewPatient = () => {
@@ -21,20 +23,21 @@ const NewPatient = () => {
     });
   };
 
+  const handleCancelClick = () => {
+    history.push("/patients")
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      [patient.name, patient.birthday, patient.allergies, patient.address].some(
-        (val) => val.trim() === ""
-      )
-    )
-      alert("Please fill in all of the information!");
 
     const newPatient = {
-      patient_name: patient.name,
-      date_of_birth: patient.birthday,
+      first_name: patient.firstName,
+      last_name: patient.lastName,
+      birthday: patient.birthday,
       gender: patient.gender,
       allergies: patient.allergies,
+      address: patient.address,
+      email: patient.email,
       phone_number: patient.phoneNumber,
     };
 
@@ -50,20 +53,25 @@ const NewPatient = () => {
     history.push("/patients");
   };
 
-  const handleCancelClick = () => {
-    console.log("cancelled");
-  };
-
   return (
     <>
-      <h1>New Patient</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="patient-name">Name: </label>
+        <label htmlFor="patient-first-name">First name: </label>
         <input
-          id="patient-name"
+          id="patient-first-name"
           type="text"
-          value={patient.name}
-          name="name"
+          value={patient.first_name}
+          name="patient-first-name"
+          onChange={handleChange}
+          autoFocus={true}
+        />
+        <br />
+        <label htmlFor="patient-last-name">Last name: </label>
+        <input
+          id="patient-last-name"
+          type="text"
+          value={patient.last_name}
+          name="patient-last-name"
           onChange={handleChange}
           autoFocus={true}
         />
@@ -78,7 +86,7 @@ const NewPatient = () => {
         />
         <br />
 
-        <label htmlFor="gender">Gender at birth: </label>
+        <label htmlFor="gender">Gender (birth): </label>
         <select name="gender">
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -102,20 +110,42 @@ const NewPatient = () => {
           onChange={handleChange}
         />
         <br />
+        <label htmlFor="email">Email: </label>
+        <input
+          id="email"
+          type="text"
+          name="email"
+          value={patient.email}
+          onChange={handleChange}
+        />
+        <br />
         <label htmlFor="phone-number">Phone #: </label>
         <input
           id="phone-number"
           type="text"
           name="phone-number"
-          value={patient.phoneNumber}
+          value={patient.phone_number}
           onChange={handleChange}
         />
         <br />
         <input type="submit" value="Save" />
-        <button onClick={handleCancelClick}>Cancel</button>
+        <button onCancelClick={handleCancelClick}>Cancel</button>
       </form>
     </>
   );
 };
 
 export default NewPatient;
+
+
+
+    // if (
+    //   [
+    //     patient.firstName,
+    //     patient.lastName,
+    //     patient.birthday,
+    //     patient.allergies,
+    //     patient.address,
+    //   ].some((val) => val.trim() === "")
+    // )
+    //   alert("Please fill in all of the information!");

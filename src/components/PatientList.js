@@ -2,24 +2,34 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import PatientCard from './PatientCard';
 
-
 const PatientList = ({SearchPatient}) => {
   const [patients, setPatients] = useState([])
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:9292/patients')
+    setLoading(true);
+    fetch(`http://localhost:9292/patients`)
       .then(r => r.json())
       .then(data => setPatients(data))
+      .then(() => setLoading(false))
+      .catch(setError)
   }, [])
 
-  const patientCards = patients.map((patient) => <PatientCard key={patient.id} patient={patient} />)
+  if (loading) return <h1>Loading...</h1>
+  if (error)
+    return <pre>{JSON.stringify(error)}</pre>
+  if (!patients) return null;
 
-  if (!patients) return <h2>Loading...</h2>;
+
+  const patientCards = patients.map((patient) => (
+    <PatientCard key={patient.id} patient={patient} />
+  ));
 
   return (
-    <div>
-      <br />
+    <div className="patients">
       <h2>Patients</h2>
+      <br />
       <h4>{<NavLink to="/patients/new">+ Create</NavLink>}</h4>
       <p>{patientCards}</p>
     </div>

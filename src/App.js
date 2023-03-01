@@ -21,7 +21,6 @@ function App() {
   }
 
   return (
-    // (currentForm === "login") ? (<Login />) : (<Register />)
     <div className="App">
       <Router>
         <NavBar />
@@ -32,7 +31,7 @@ function App() {
           <Route exact path="/how-it-works" component={HowItWorks} />
           <Route exact path="/patients" component={PatientList} />
           <Route exact path="/patients/new" component={NewPatient} />
-          <Route exact path="/medications" component={MedicationList}></Route>
+          <Route exact path="/medications" component={MedicationList} />
           <Route exact path="/medications/new" component={NewMedication} />
           <Route component={ErrorPage} />
         </Switch>

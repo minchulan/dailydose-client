@@ -1,14 +1,13 @@
 import React from "react";
 
-const SearchPatient = ({ searchPatient, onSearchChange }) => {
+const SearchPatient = () => {
   return (
     <div>
       <input
         type="text"
         name="Search"
-        placeholder="Search"
-        value={searchPatient}
-        onChange={(e) => onSearchChange(e.target.value)}
+        placeholder="Search..."
+        autoComplete="off"
       />
     </div>
   );
