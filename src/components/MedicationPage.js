@@ -9,7 +9,6 @@ const MedicationPage = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-
     useEffect(() => {
         setLoading(true);
         fetch(`http://localhost:9292/medications`)
@@ -27,25 +26,40 @@ const MedicationPage = () => {
         medication.medication_name.toLowerCase().includes(search.toLowerCase())
     );
 
-    const handleDeleteMedication = (medication) => {
-        setMedications([...medications, medication]);
+    const handleDeleteMedication = (id) => {
+        const updatedMedications = medications.filter((medication) => medication.id !== id)
+        setMedications(updatedMedications);
     };
 
     const handleAddMedication = (medication) => {
         setMedications([...medications, medication]);
     }
 
-    const handleUpdateMedication = () => {
-        console.log("updated!");
+    const handleUpdateMedication = (updatedMedicationObject) => {
+        const updatedPrice = medications.map((medication) => {
+            if (medication.id === updatedMedicationObject.id) {
+                return updatedMedicationObject;
+            } else {
+                return medication;
+            }
+        });
+        setMedications(updatedPrice);
     }
     
     return (
-        <div>
-            <h2>Medications</h2>
-            <h4>{<NavLink to="/medications/new">+ New </NavLink>}</h4>
-            <SearchMedication search={search} onSearchChange={setSearch} />
-            {medications && <MedicationList medications={searchResults} onDeleteMedication={handleDeleteMedication} onAddNewMedication={handleAddMedication} />}
-        </div>    
+      <div>
+        <h2>Medications</h2>
+        <h4>{<NavLink to="/medications/new"> + New Rx </NavLink>}</h4>
+        <SearchMedication search={search} onSearchChange={setSearch} />
+        {medications && (
+          <MedicationList
+            medications={searchResults}
+            onDeleteMedication={handleDeleteMedication}
+            onAddNewMedication={handleAddMedication}
+            onUpdateMedication={handleUpdateMedication}
+          />
+        )}
+      </div>
     );
 }
 
