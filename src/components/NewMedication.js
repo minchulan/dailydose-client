@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const NewMedication = () => {
+const NewMedication = ({onAddNewMedication}) => {
   const [medicationName, setMedicationName] = useState("");
   const history = useHistory();
 
@@ -21,7 +21,7 @@ const NewMedication = () => {
       body: JSON.stringify(medicationObject), 
     })
       .then((r) => r.json())
-      .then((data) => setMedicationName(data.medication_name))
+      .then((data) => onAddNewMedication(data.medication_name))
     
     history.push("/medications")
   }

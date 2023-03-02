@@ -29,9 +29,8 @@ const PatientList = ({SearchPatient}) => {
   return (
     <div className="patients">
       <h2>Patients</h2>
-      <br />
-      <h4>{<NavLink to="/patients/new">+ Create</NavLink>}</h4>
-      <p>{patientCards}</p>
+      <h4>{<NavLink to="/patients/new">+ New </NavLink>}</h4>
+      <ul>{patientCards}</ul>
     </div>
   );
 }

@@ -4,17 +4,21 @@ import { useHistory } from 'react-router-dom';
 const Home = () => {
     const history = useHistory();
     
-    const routeChange = () => {       
-        history.push('/login');
+    const routePatientChange = () => { 
+        history.push('/patients/new')
     }
+
+    const routeMedicationChange = () => {
+        history.push("/medications/new");
+    };
         
     return (
         <div className="home">
-            <h1>The Pharmacy that really delivers</h1>
-            <p>With transparent pricing. Easy refills. Even savings for Loyalty members.</p>
             <br />
-            <button onClick={routeChange}>Get started</button>
-        </div>
+            <h3>Patient & Medication Management</h3>
+            <button onClick={routePatientChange}>Create Patient</button>
+        <button onClick={routeMedicationChange}>Create Medication</button>
+      </div>
     );
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const SearchPatient = () => {
+const SearchPatient = ({search, onSearchChange}) => {
   return (
     <div>
       <input
@@ -8,6 +8,8 @@ const SearchPatient = () => {
         name="Search"
         placeholder="Search..."
         autoComplete="off"
+        value={search}
+        onChange={e => onSearchChange(e.target.value)}
       />
     </div>
   );

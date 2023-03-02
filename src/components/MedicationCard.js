@@ -1,15 +1,31 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 
-const MedicationCard = ({ medication }) => {
+const MedicationCard = ({ medication, onDeleteMedication }) => {
+    const { id } = medication;
+
+    const handleDeleteClick = () => {
+        fetch(`http://localhost:9292/medications/${id}`, {
+            method: "DELETE"
+        })
+        onDeleteMedication(id)
+    };
+
+    const handleEditClick = () => {
+        console.log("updating!")
+    }
+
     return (
-        <div>
+      <div>
             <img src={medication.image_url} alt="medication images" />
-            <h5>{medication.medication_name}</h5>
-            <h5>${medication.price}</h5>
+            <h3>{medication.medication_name}</h3>
+            <h4>${medication.price}</h4>
+            <button className="emoji-button update" onClick={handleEditClick}>✏️</button>
+            <button className="emoji-button delete" onClick={handleDeleteClick}>🗑</button> 
             <br />
-        </div>
-
+            <br />
+            <br />
+            <br />
+      </div>
     );
 }
 

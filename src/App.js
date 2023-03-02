@@ -2,43 +2,70 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from "./components/Home";
-import PatientList from './components/PatientList';
+import PatientPage from './components/PatientPage';
 import NewPatient from './components/NewPatient';
-import MedicationList from './components/MedicationList';
+import MedicationPage from './components/MedicationPage';
 import NewMedication from './components/NewMedication';
 import ErrorPage from "./components/ErrorPage";
-import Login from './components/Login';
-import MedicationCard from './components/MedicationCard';
-import About from './components/About';
-import HowItWorks from './components/HowItWorks';
-// import Register from './components/Register';
+import LoginForm from './components/LoginForm';
+import PatientList from './components/PatientList';
 
 function App() {
-  const [currentForm, setCurrentForm] = useState("login");
+  const adminUser = {
+    email: "admin@admin.com",
+    password: "admin123"
+  }
 
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
+  const [user, setUser] = useState({ name: "", email: "" });
+  const [error, setError] = useState("");
+
+  const Login = details => {
+    if (details.email === adminUser.email && details.password === adminUser.password) {
+      console.log("Logged in!");
+      setUser({
+        name: details.name,
+        email: details.email
+      });
+    } else 
+      setError("Details do not match!")
+  }
+
+  const Logout = () => {
+    console.log("Logged out!")
+    setUser({ name: "", email: "" });
   }
 
   return (
     <div className="App">
-      <Router>
-        <NavBar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/how-it-works" component={HowItWorks} />
-          <Route exact path="/patients" component={PatientList} />
-          <Route exact path="/patients/new" component={NewPatient} />
-          <Route exact path="/medications" component={MedicationList} />
-          <Route exact path="/medications/new" component={NewMedication} />
-          <Route component={ErrorPage} />
-        </Switch>
-      </Router>
+      {user.email !== "" ? (
+        <div>
+          <h2>
+            Welcome, <span>{user.name}</span>
+          </h2>
+          <button onClick={Logout}>Logout</button>
+          <br />
+          <Router>
+            <NavBar />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/patients" component={PatientList} />
+              <Route exact path="/patients/new" component={NewPatient} />
+              <Route exact path="/medications" component={MedicationPage} />
+              <Route exact path="/medications/new" component={NewMedication} />
+              <Route component={ErrorPage} />
+            </Switch>
+          </Router>
+        </div>
+      ) : (
+          <div>
+            <h1>Daily Dose</h1>
+            <h3>Patient & Medication Management for Pharmacists</h3>
+            <br />
+            <LoginForm Login={Login} error={error} />
+        </div>
+      )}
     </div>
   );
-
 }
 
 export default App;

@@ -9,7 +9,7 @@ const initialState = {
   allergies: "",
   address: "",
   email: "",
-  phoneNumber: ""
+  phoneNumber: "",
 };
 
 const NewPatient = () => {
@@ -24,8 +24,8 @@ const NewPatient = () => {
   };
 
   const handleCancelClick = () => {
-    history.push("/patients")
-  }
+    history.push("/patients");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -129,7 +129,7 @@ const NewPatient = () => {
         />
         <br />
         <input type="submit" value="Save" />
-        <button onCancelClick={handleCancelClick}>Cancel</button>
+        <button onClick={handleCancelClick}>Cancel</button>
       </form>
     </>
   );
@@ -137,15 +137,13 @@ const NewPatient = () => {
 
 export default NewPatient;
 
-
-
-    // if (
-    //   [
-    //     patient.firstName,
-    //     patient.lastName,
-    //     patient.birthday,
-    //     patient.allergies,
-    //     patient.address,
-    //   ].some((val) => val.trim() === "")
-    // )
-    //   alert("Please fill in all of the information!");
+// if (
+//   [
+//     patient.firstName,
+//     patient.lastName,
+//     patient.birthday,
+//     patient.allergies,
+//     patient.address,
+//   ].some((val) => val.trim() === "")
+// )
+//   alert("Please fill in all of the information!");

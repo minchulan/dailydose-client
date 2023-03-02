@@ -28,14 +28,6 @@ const NavBar = () => {
         activeStyle={{ fontWeight: "bolder" }}
         exact
         style={style}
-        to="/how-it-works"
-      >
-        How It Works
-      </NavLink>
-      <NavLink
-        activeStyle={{ fontWeight: "bolder" }}
-        exact
-        style={style}
         to="/patients"
       >
         Patients
@@ -47,14 +39,6 @@ const NavBar = () => {
         to="/medications"
       >
         Medications
-      </NavLink>
-      <NavLink
-        activeStyle={{ fontWeight: "bolder" }}
-        exact
-        style={style}
-        to="/login"
-      >
-        Sign Up | Sign in
       </NavLink>
     </nav>
   );
