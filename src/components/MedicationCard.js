@@ -12,11 +12,6 @@ const MedicationCard = ({ medication, onDeleteMedication, onUpdateMedication }) 
         onDeleteMedication(id)
     };
 
-    const handlePictureClick = () => {
-        window.alert("You will be redirected to the lowest Rx prices")
-        window.location.href = "https://www.goodrx.com";
-    };
-
     const handleUpdatePrice = (updatedPrice) => {
         setIsEditing(false);
         onUpdateMedication(updatedPrice);
@@ -24,17 +19,28 @@ const MedicationCard = ({ medication, onDeleteMedication, onUpdateMedication }) 
 
     return (
       <div>
-        <img src={medication.image_url} alt="medication images" onClick={handlePictureClick}/>
-        <h3>{medication.medication_name}</h3>
-        <h5>{medication.dose} mg, {medication.quantity} tablets</h5>
+        <img src={medication.image_url} alt="medication images" />
+        <h2>{medication.medication_name}</h2>
+        <p>aka {medication.aka}</p>
+        <h5>THC {medication.thc_strength}%, CBD {medication.cbd_strength}%</h5>
+        <p>🧘 {medication.feelings}</p>
+        {isEditing ? (
+          <MedicationEditForm
+            price={price} 
+            id={id}
+            onUpdateMedication={handleUpdatePrice}
+          />
+        ) : (<h2>${medication.price}</h2>)}
+        <button
+          className="emoji-button edit"
+          onClick={() => setIsEditing((isEditing) => !isEditing)}
+        >
+          ✏️
+        </button>
+        <button className="emoji-button delete" onClick={handleDeleteClick}>
+          🗑
+        </button>
         <hr />
-        {isEditing ? (<MedicationEditForm price={price} id={id} onUpdateMedication={handleUpdatePrice} />) : (<h2>${medication.price}</h2>)}
-        <button className="emoji-button edit" onClick={() => setIsEditing(isEditing => !isEditing)}>✏️</button>
-        <button className="emoji-button delete" onClick={handleDeleteClick}>🗑</button>
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
     );
 }

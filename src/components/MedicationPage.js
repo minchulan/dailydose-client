@@ -32,7 +32,7 @@ const MedicationPage = () => {
     };
 
     const handleAddMedication = (medication) => {
-        setMedications([...medications, medication]);
+        setMedications([medication, ...medications]);
     }
 
     const handleUpdateMedication = (updatedMedicationObject) => {

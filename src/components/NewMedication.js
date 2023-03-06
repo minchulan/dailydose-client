@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-const NewMedication = ({onAddNewMedication}) => {
+const NewMedication = ({ onAddNewMedication }) => {
   const [medicationName, setMedicationName] = useState("");
   const history = useHistory();
 
   const handleChange = (e) => {
-    setMedicationName(e.target.value)
-  }
+    setMedicationName(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const medicationObject = { medication_name: medicationName };
 
-    fetch("http://localhost:9292/medications", { 
+    fetch("http://localhost:9292/medications", {
       method: "POST",
-      headers: {   
-        "Content-Type": "application/json", 
+      headers: {
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(medicationObject), 
+      body: JSON.stringify(medicationObject),
     })
       .then((r) => r.json())
-      .then((data) => onAddNewMedication(data))
-    
-    history.push("/medications")
-  }
+      .then((data) => onAddNewMedication(data));
+
+    history.push("/medications");
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div className="new-drug-form">
         <label htmlFor="rx-name">Name: </label>
         <input
           type="text"
@@ -37,6 +37,7 @@ const NewMedication = ({onAddNewMedication}) => {
           value={medicationName}
           onChange={handleChange}
           autoFocus={true}
+          className="input-text"
         />
         <br />
         <label htmlFor="rx-image">Image URL: </label>
@@ -58,6 +59,6 @@ const NewMedication = ({onAddNewMedication}) => {
       </div>
     </form>
   );
-}
+};
 
-export default NewMedication
+export default NewMedication;

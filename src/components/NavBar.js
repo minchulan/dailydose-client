@@ -38,7 +38,7 @@ const NavBar = () => {
         style={style}
         to="/medications"
       >
-        Rx Savings
+        Medications
       </NavLink>
     </nav>
   );

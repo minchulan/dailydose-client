@@ -29,6 +29,9 @@ const NewPatient = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if ([patient.firstName, patient.lastName, patient.birthday, patient.email, patient.phoneNumber].some(val => val.trim() === "")) {
+      alert("Please fill in all the required fields.")
+    }
 
     const newPatient = {
       first_name: patient.firstName,
@@ -39,7 +42,7 @@ const NewPatient = () => {
       address: patient.address,
       email: patient.email,
       phone_number: patient.phoneNumber,
-    };
+    }
 
     fetch("http://localhost:9292/patients", {
       method: "POST",
@@ -56,24 +59,26 @@ const NewPatient = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="patient-first-name">First name: </label>
+        <label htmlFor="firstName">First name: </label>
         <input
-          id="patient-first-name"
+          id="firstName"
           type="text"
-          value={patient.first_name}
-          name="patient-first-name"
+          value={patient.firstName}
+          name="firstName"
           onChange={handleChange}
           autoFocus={true}
+          required
         />
         <br />
-        <label htmlFor="patient-last-name">Last name: </label>
+        <label htmlFor="lastName">Last name: </label>
         <input
-          id="patient-last-name"
+          id="lastName"
           type="text"
-          value={patient.last_name}
-          name="patient-last-name"
+          value={patient.lastName}
+          name="lastName"
           onChange={handleChange}
           autoFocus={true}
+          required
         />
         <br />
         <label htmlFor="birthday">Date of birth: </label>
@@ -83,13 +88,15 @@ const NewPatient = () => {
           name="birthday"
           value={patient.birthday}
           onChange={handleChange}
+          required
         />
         <br />
 
-        <label htmlFor="gender">Gender (birth): </label>
+        <label htmlFor="gender">Gender(birth): </label>
         <select name="gender">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option></option>
+          <option value={patient.gender}>Male</option>
+          <option value={patient.gender}>Female</option>
         </select>
         <br />
         <label htmlFor="allergies">Allergies: </label>
@@ -108,6 +115,7 @@ const NewPatient = () => {
           name="address"
           value={patient.address}
           onChange={handleChange}
+          required
         />
         <br />
         <label htmlFor="email">Email: </label>
@@ -117,15 +125,17 @@ const NewPatient = () => {
           name="email"
           value={patient.email}
           onChange={handleChange}
+          required
         />
         <br />
-        <label htmlFor="phone-number">Phone #: </label>
+        <label htmlFor="phoneNumber">Phone #: </label>
         <input
-          id="phone-number"
+          id="phoneNumber"
           type="text"
-          name="phone-number"
-          value={patient.phone_number}
+          name="phoneNumber"
+          value={patient.phoneNumber}
           onChange={handleChange}
+          required
         />
         <br />
         <input type="submit" value="Save" />

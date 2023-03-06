@@ -15,10 +15,10 @@ const Home = () => {
     return (
         <div className="home">
             <br />
-            <h3>Patient & Medication Management</h3>
+            <h3>Patient & Medication Management for Cannabis Clinicians</h3>
             <button onClick={routePatientChange}>Manage Patients</button>
             <br />
-        <button onClick={routeMedicationChange}>Manage Rx Savings</button>
+        <button onClick={routeMedicationChange}>Search Cannabis</button>
       </div>
     );
 }
