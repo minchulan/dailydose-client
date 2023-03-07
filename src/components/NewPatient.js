@@ -29,8 +29,16 @@ const NewPatient = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if ([patient.firstName, patient.lastName, patient.birthday, patient.email, patient.phoneNumber].some(val => val.trim() === "")) {
-      alert("Please fill in all the required fields.")
+    if (
+      [
+        patient.firstName,
+        patient.lastName,
+        patient.birthday,
+        patient.email,
+        patient.phoneNumber,
+      ].some((val) => val.trim() === "")
+    ) {
+      alert("Please fill in all the required fields.");
     }
 
     const newPatient = {
@@ -42,7 +50,7 @@ const NewPatient = () => {
       address: patient.address,
       email: patient.email,
       phone_number: patient.phoneNumber,
-    }
+    };
 
     fetch("http://localhost:9292/patients", {
       method: "POST",
@@ -52,7 +60,7 @@ const NewPatient = () => {
       body: JSON.stringify(newPatient),
     })
       .then((r) => r.json())
-      .then((data) => setPatient(data));
+      .then((newPatient) => setPatient(newPatient));
     history.push("/patients");
   };
 

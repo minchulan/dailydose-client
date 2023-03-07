@@ -1,11 +1,9 @@
 import React from 'react';
 import MedicationCard from './MedicationCard';
 
-const MedicationList = ({ medications, onDeleteMedication, onAddNewMedication, onUpdateMedication }) => {
-  
-
+const MedicationList = ({ medications }) => {
   const medicationCards = medications.map((medication) => (
-    <MedicationCard key={medication.id} medication={medication} onDeleteMedication={onDeleteMedication} onAddNewMedication={onAddNewMedication} onUpdateMedication={onUpdateMedication} />
+    <MedicationCard key={medication.id} medication={medication} />
   ));
 
   return (

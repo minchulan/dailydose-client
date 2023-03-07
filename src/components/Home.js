@@ -16,9 +16,9 @@ const Home = () => {
         <div className="home">
             <br />
             <h3>Patient & Medication Management for Cannabis Clinicians</h3>
-            <button onClick={routePatientChange}>Manage Patients</button>
+            <button onClick={routePatientChange}>Manage Patient</button>
             <br />
-        <button onClick={routeMedicationChange}>Search Cannabis</button>
+        <button onClick={routeMedicationChange}>Search Medication</button>
       </div>
     );
 }

@@ -1,11 +1,12 @@
 import React from "react";
 
-const SearchPatient = ({search, onSearchChange}) => {
+const SearchPatient = ({ search, onSearchChange }) => {
   return (
-    <div>
+    <div className="searchbar">
+      <label htmlFor="search"></label>
       <input
         type="text"
-        name="Search"
+        name="search"
         placeholder="Search..."
         autoComplete="off"
         value={search}

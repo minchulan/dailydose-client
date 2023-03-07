@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const style = {
+const style = { 
   width: "60%",
   margin: "5% 0 1%",
   padding: "0.5em",
