@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { baseUrl } from "../globals";
 
 const initialState = {
   firstName: "",
@@ -16,6 +17,17 @@ const NewPatient = () => {
   const [patient, setPatient] = useState(initialState);
   const history = useHistory();
 
+  const newPatient = {
+    first_name: patient.firstName,
+    last_name: patient.lastName,
+    birthday: patient.birthday,
+    gender: patient.gender,
+    allergies: patient.allergies,
+    address: patient.address,
+    email: patient.email,
+    phone_number: patient.phoneNumber,
+  };
+
   const handleChange = (e) => {
     setPatient({
       ...patient,
@@ -29,30 +41,7 @@ const NewPatient = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      [
-        patient.firstName,
-        patient.lastName,
-        patient.birthday,
-        patient.email,
-        patient.phoneNumber,
-      ].some((val) => val.trim() === "")
-    ) {
-      alert("Please fill in all the required fields.");
-    }
-
-    const newPatient = {
-      first_name: patient.firstName,
-      last_name: patient.lastName,
-      birthday: patient.birthday,
-      gender: patient.gender,
-      allergies: patient.allergies,
-      address: patient.address,
-      email: patient.email,
-      phone_number: patient.phoneNumber,
-    };
-
-    fetch("http://localhost:9292/patients", {
+    fetch(`${baseUrl}/patients`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

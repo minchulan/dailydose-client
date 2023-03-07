@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
+import ErrorPage from "./components/ErrorPage";
+import LoginForm from "./components/LoginForm";
 import PatientPage from "./components/PatientPage";
 import PatientDetails from "./components/PatientDetails";
 import NewPatient from "./components/NewPatient";
 import MedicationPage from "./components/MedicationPage";
-import ErrorPage from "./components/ErrorPage";
-import LoginForm from "./components/LoginForm";
+import NewMedication from "./components/NewMedication";
+import MedicationDetails from "./components/MedicationDetails";
+import EditPatient from "./components/EditPatient";
 
 // App just handles the login and routing
-
 const App = () => {
   const [user, setUser] = useState({ name: "", email: "" });
   const [error, setError] = useState("");
@@ -54,7 +56,18 @@ const App = () => {
               <Route exact path="/patients" component={PatientPage} />
               <Route exact path="/patients/:id" component={PatientDetails} />
               <Route exact path="/patients/new" component={NewPatient} />
+              <Route exact path="/patients/:id/edit" component={EditPatient} />
               <Route exact path="/medications" component={MedicationPage} />
+              <Route
+                exact
+                path="/patients/:patientId/medications/new"
+                component={NewMedication}
+              />
+              <Route
+                exact
+                path="/medications/:id"
+                component={MedicationDetails}
+              />
               <Route component={ErrorPage} />
             </Switch>
           </Router>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MedicationList from './MedicationList';
 import SearchMedication from './SearchMedication';
+import MedicationCard from './MedicationCard';
 import { baseUrl } from '../globals';
 
 const MedicationPage = () => {
@@ -22,19 +22,19 @@ const MedicationPage = () => {
     if (error) return <pre>{JSON.stringify(error)}</pre>; 
     if (!medications) return null;
 
-    const searchResults = medications.filter((medication) => 
-        medication.medication_name.toLowerCase().includes(search.toLowerCase())
-    );
+    // const searchResults = medications.filter((medication) => 
+    //     medication.medication_name.toLowerCase().includes(search.toLowerCase())
+    // );
+  
+    const medicationCards = medications.map((medication) => (
+      <MedicationCard key={medication.id} medication={medication} patient={medication.patient} />
+    ));
 
     return (
       <div>
         <h2>Medications</h2>
         <SearchMedication search={search} onSearchChange={setSearch} />
-        {medications && (
-          <MedicationList
-            medications={searchResults}
-          />
-        )}
+        {medicationCards}
       </div>
     );
 }

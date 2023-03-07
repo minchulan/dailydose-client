@@ -19,13 +19,23 @@ const PatientPage = () => {
       .catch(setError);
   }, []);
 
-
   if (loading) return <h1>Loading...</h1>;
   if (error) return <pre>{JSON.stringify(error)}</pre>;
   if (!patients) return null;
 
+  const deletePatient = (id) => {
+    fetch(`${baseUrl}/patients/${id}`, {
+      method: "DELETE"
+    })
+    removePatient(id);
+  };
+
+  const removePatient = (id) => {
+    setPatients(patients.filter((patient) => patient.id !== id))
+  };
+
   const patientsList = patients.map((patient) => (
-    <PatientCard key={patient.id} patient={patient} />
+    <PatientCard key={patient.id} patient={patient} medication={patient.medication} deletePatient={deletePatient} />
   ));
 
   return (
