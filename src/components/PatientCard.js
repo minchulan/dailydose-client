@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const PatientCard = ({ patient, deletePatient }) => {
+const PatientCard = ({ patient }) => {
   return (
     <li>
-      <NavLink to={`/patients/${patient.id}`}>{patient.first_name} {patient.last_name}</NavLink> - <button onClick={() => deletePatient(patient.id)}>Delete</button>
+      <NavLink to={`/patients/${patient.id}`}>{patient.first_name} {patient.last_name}</NavLink> - <button>Delete</button>
     </li>
   );
 };

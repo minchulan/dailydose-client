@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { baseUrl } from "../globals";
 
-const initialState = {
+const initialPatientState = {
   firstName: "",
   lastName: "",
   birthday: "",
@@ -14,7 +14,7 @@ const initialState = {
 };
 
 const NewPatient = () => {
-  const [patient, setPatient] = useState(initialState);
+  const [patient, setPatient] = useState(initialPatientState);
   const history = useHistory();
 
   const newPatient = {

@@ -23,19 +23,21 @@ const PatientPage = () => {
   if (error) return <pre>{JSON.stringify(error)}</pre>;
   if (!patients) return null;
 
-  const deletePatient = (id) => {
+  const handleDeletePatient = (id) => {
+    //persist changes on server
     fetch(`${baseUrl}/patients/${id}`, {
       method: "DELETE"
     })
-    removePatient(id);
+    deletePatient(id);
   };
 
-  const removePatient = (id) => {
-    setPatients(patients.filter((patient) => patient.id !== id))
+  const deletePatient = (id) => {
+    const updatedPatients = patients.filter((patient) => patient.id !== id)
+    setPatients(updatedPatients)
   };
 
   const patientsList = patients.map((patient) => (
-    <PatientCard key={patient.id} patient={patient} medication={patient.medication} deletePatient={deletePatient} />
+    <PatientCard key={patient.id} patient={patient} medication={patient.medication} onDeletePatient={handleDeletePatient} />
   ));
 
   return (

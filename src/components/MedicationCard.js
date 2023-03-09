@@ -4,7 +4,11 @@ import { NavLink } from 'react-router-dom';
 const MedicationCard = ({ medication, patient }) => {
   return (
     <li>
-      <NavLink to={`/medications/${medication.id}`}>{medication.medication_name}</NavLink>
+      <NavLink to={`/medications/${medication.id}`}>
+        {medication.medication_name}
+      </NavLink> - 
+      {" "}
+      <button>Delete</button>
       <br />
     </li>
   );

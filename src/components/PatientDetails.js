@@ -9,40 +9,41 @@ const PatientDetails = () => {
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
 
-    useEffect(() => {
-        const loadPatient = async () => {
-            const resp = await fetch(`${baseUrl}/patients/${id}`)
-            const data = await resp.json();
-            setPatient(data);
-            setLoading(false);
-        }
-        loadPatient();
-    }, [id])
+  useEffect(() => {
+      const loadPatient = async () => {
+          const resp = await fetch(`${baseUrl}/patients/${id}`)
+          const data = await resp.json();
+          
+        setPatient(data);
+        setLoading(false);
+      }
+    loadPatient();
+  }, [id])
+  
+  if (loading) {
+    return <h2>Loading...</h2>
+  } else {
 
-    if (loading) {
-        return <h1>Loading...</h1>
-    } else {
-      const deleteMedication = (id) => {
-        fetch(`${baseUrl}/medications/${id}`, {
-          method: "DELETE"
-        })
-        removeMedication(id);
-      }
-      const removeMedication = id => {
-        setPatient({
-          ...patient,
-          medications: patient.medications.filter(medication => medication.id !== id)
-        })
-      }
+    const deleteMedication = async (id) => {
+      await fetch(`${baseUrl}/medications/${id}`, {method: "DELETE"})
+      removeMedication(id);
     }
 
-    const medicationCards = patient.medications.map((medication) => (
-        <MedicationCard
-            key={medication.id}
-            medication={medication}
-            patient={patient} 
-        />
-    ));
+    const removeMedication = id => {
+      setPatient({
+        ...patient,
+        medications: patient.medications.filter(medication => medication.id !== id)
+      })
+    }
+  }
+
+  const medicationCards = patient.medications.map((medication) => (
+    <MedicationCard
+      key={medication.id}
+      medication={medication}
+      patient={patient} 
+      />
+  ));
     
     return (
       <div>

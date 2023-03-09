@@ -17,6 +17,7 @@ const MedicationDetails = () => {
     if (!medication) {
         return <h2>Loading...</h2>
     } else {
+      
         return (
             <div>
                 <br />

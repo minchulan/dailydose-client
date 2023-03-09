@@ -1,42 +1,53 @@
 import React, { useState, useEffect } from 'react';
+import MedicationCard from "./MedicationCard";
+import { baseUrl } from "../globals";
 import SearchMedication from './SearchMedication';
-import MedicationCard from './MedicationCard';
-import { baseUrl } from '../globals';
 
 const MedicationPage = () => {
-    const [medications, setMedications] = useState([]);
-    const [search, setSearch] = useState("");
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        setLoading(true);
-        fetch(`${baseUrl}/medications`)
-            .then((r) => r.json())
-            .then((data) => setMedications(data))
-            .then(() => setLoading(false))
-            .catch(setError);
-    }, []);
-
-    if (loading) return <h1>Loading...</h1>;
-    if (error) return <pre>{JSON.stringify(error)}</pre>; 
-    if (!medications) return null;
-
-    // const searchResults = medications.filter((medication) => 
-    //     medication.medication_name.toLowerCase().includes(search.toLowerCase())
-    // );
+  const [medications, setMedications] = useState([]);
+  const [filteredMedications, setFilteredMedications] = useState([]);
+  const [loading, setLoading] = useState(false);
   
-    const medicationCards = medications.map((medication) => (
-      <MedicationCard key={medication.id} medication={medication} patient={medication.patient} />
-    ));
+  useEffect(() => {
+    const loadMedications = async () => {
+      const resp = await fetch(`${baseUrl}/medications`)
+      const data = await resp.json();
+      setMedications(data);
+      setFilteredMedications(data);
+      setLoading(false);
+    }
+    loadMedications();
+  }, [])
 
-    return (
-      <div>
-        <h2>Medications</h2>
-        <SearchMedication search={search} onSearchChange={setSearch} />
-        {medicationCards}
-      </div>
-    );
+  if (loading) return <h1>Loading...</h1>;
+  if (!medications) return null;
+
+  const deleteMedication = (id) => {
+    fetch(`${baseUrl}/medications/${id}`, {
+      method: "DELETE"
+    })
+    removeMedication(id)
+  }
+  const removeMedication = (id) => {
+    const updatedMedications = medications.filter(medication => medication.id !== id)
+    setMedications(updatedMedications)
+  };
+
+  const handleSearch = (term) => {
+    setFilteredMedications(medications.filter((medication) => medication.medication_name.toLowerCase().includes(term.toLowerCase())))
+  };
+  
+  const medicationCards = filteredMedications.map((medication) => (
+    <MedicationCard key={medication.id} medication={medication} patient={medication.patient} deleteMedication={deleteMedication} />
+  ));
+
+  return (
+    <div>
+      <h2>Medications</h2>
+      <SearchMedication handleSearch={handleSearch} />
+      {medicationCards}
+    </div>
+  );
 }
 
 

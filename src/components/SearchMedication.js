@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const SearchMedication = ({search, onSearchChange}) => {
+const SearchMedication = ({ handleSearch }) => {
+  const [query, setQuery] = useState("");
+  const handleChange = (e) => {
+    setQuery(e.target.value)
+    handleSearch(query)
+  };
+
   return (
     <div className="searchbar">
       <label htmlFor="search"></label>
@@ -10,9 +16,8 @@ const SearchMedication = ({search, onSearchChange}) => {
         name="search"
         placeholder="Search..."
         autoComplete="off"
-        value={search}
-        onChange={(e) => onSearchChange(e.target.value)} />
-
+        value={query}
+        onChange={handleChange} />
     </div>
   )
 }
