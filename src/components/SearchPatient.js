@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useState } from 'react';
 
-const SearchPatient = ({ search, onSearchChange }) => {
-  return (
-    <div className="searchbar">
-      <label htmlFor="search"></label>
-      <input
-        type="text"
-        name="search"
-        placeholder="Search..."
-        autoComplete="off"
-        value={search}
-        onChange={e => onSearchChange(e.target.value)}
-      />
-    </div>
-  );
-};
+const SearchPatient = ({ handleSearchPatient }) => {
+    const [query, setQuery] = useState("");
 
-export default SearchPatient;
+    const handleChange = (e) => {
+        setQuery(e.target.value)
+        handleSearchPatient(query)
+    };
+
+    return (
+        <div className="searchbar">
+            <label htmlFor="search"></label>
+            <input
+                type="text"
+                id="search"
+                name="search"
+                placeholder="Search by first name..."
+                autocomplete="off"
+                value={query}
+                onChange={handleChange}
+            />
+        </div>
+    )
+}
+
+export default SearchPatient

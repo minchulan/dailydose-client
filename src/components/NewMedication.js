@@ -11,8 +11,12 @@ const initialMedicationState = {
   negatives: "",
   helpsWith: "",
   details: "",
-  aka: ""
+  aka: "",
+  imageUrl: ""
 };
+
+// persist new medication on server
+// then use onAddMedication to add medication to state 
 
 const NewMedication = () => {
   const [patient, setPatient] = useState(null);
@@ -21,14 +25,25 @@ const NewMedication = () => {
   const { patientId } = useParams();
   const history = useHistory();
 
+    const newMedication = {
+      medication_name: med.medicationName,
+      aka: med.aka,
+      thc_strength: med.thcStrength,
+      cbd_strength: med.cbdStrength,
+      feelings: med.feelings,
+      negatives: med.negatives,
+      helps_with:med.helpsWith,
+      details: med.details,
+      image_url: med.imageUrl
+    };
+  
   useEffect(() => {
-    const loadPatient = async () => {
-      const resp = await fetch(`${baseUrl}/patients/${patientId}`)
-      const data = await resp.json();
-      setPatient(data);
-      setLoading(false);
-    }
-    loadPatient();
+    fetch(`${baseUrl}/patients/${patientId}`)
+      .then(r => r.json())
+      .then(data => {
+        setPatient(data);
+        setLoading(false);
+    })
   }, [patientId])
 
   if (loading) { <h2>Loading...</h2> };
@@ -48,85 +63,125 @@ const NewMedication = () => {
     const options = {
       method: "POST",
       headers,
-      body: JSON.stringify(med)
+      body: JSON.stringify(newMedication)
     }
-    await fetch(`${baseUrl}/patients/${patientId}/medications`)
+    await fetch(`${baseUrl}/patients/${patientId}/medications`, options)
 
     history.push(`/patients/${patientId}`);
   }
 
+  const handleCancelClick = (e) => {
+    e.preventDefault();
+    history.push(`/patients`)
+  };
+
   return (
     <div>
-      <h2>
-        Create Medication For {patient.first_name} {patient.last_name}{" "}
-      </h2>
+      <h2>Create Medication </h2>
+      {/* <h2>Create Medication{patient.first_name} {patient.last_name}</h2> */}
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="medication-name">Name: </label>
+          <label htmlFor="medicationName">Name: </label>
           <input
             type="text"
-            name="medication-name"
-            id="medication-name"
+            name="medicationName"
+            placeholder="Strain name..."
+            id="medicationName"
             value={med.medicationName}
             onChange={handleChange}
+            className="input-text"
           />
-          <label htmlFor="thc-strength">THC: </label>
+          <br />
+          <label htmlFor="aka">Alias: </label>
           <input
             type="text"
-            name="thc-strength"
-            id="thc-strength"
+            name="aka"
+            placeholder="Also known as..."
+            id="aka"
+            value={newMedication.aka}
+            onChange={handleChange}
+            className="input-text"
+          />
+          <br />
+          <label htmlFor="thcStrength">THC %: </label>
+          <input
+            type="number"
+            name="thcStrength"
+            placeholder="0"
+            id="thcStrength"
             value={med.thcStrength}
             onChange={handleChange}
+            className="input-text"
           />
-          <label htmlFor="cbd-strength">CBD: </label>
+          <br />
+          <label htmlFor="cbdStrength">CBD %: </label>
           <input
-            type="text"
-            name="cbd-strength"
-            id="cbd-strength"
+            type="number"
+            name="cbdStrength"
+            placeholder="0"
+            id="cbdStrength"
             value={med.cbdStrength}
             onChange={handleChange}
+            className="input-text"
           />
-          <label htmlFor="feelings">Feels: </label>
+          <br />
+          <label htmlFor="feelings">Feelings: </label>
           <input
             type="text"
             name="feelings"
+            placeholder="Relaxed · Happy"
             id="feelings"
             value={med.feelings}
             onChange={handleChange}
+            className="input-text"
           />
-          <label htmlFor="negatives">Side Effects: </label>
+          <br />
+          <label htmlFor="negatives">Adverse Effects: </label>
           <input
             type="text"
             name="negatives"
+            placeholder="Dry mouth · Anxious"
             id="negatives"
             value={med.negatives}
             onChange={handleChange}
+            className="input-text"
           />
-          <label htmlFor="helps-with">Helps with: </label>
+          <br />
+          <label htmlFor="helpsWith">Helps with: </label>
           <input
             type="text"
-            name="helps-with"
-            id="helps-with"
+            name="helpsWith"
+            placeholder="Anxiety · Stress"
+            id="helpsWith"
             value={med.helpsWith}
             onChange={handleChange}
+            className="input-text"
           />
+          <br />
           <label htmlFor="details">Details: </label>
           <input
             type="text"
             name="details"
+            placeholder="Sativa-dominant strain..."
             id="details"
             value={med.details}
             onChange={handleChange}
+            className="input-text"
           />
-          <label htmlFor="aka">aka: </label>
+          <br />
+          <label htmlFor="imageUrl">Image URL: </label>
           <input
             type="text"
-            name="aka"
-            id="aka"
-            value={med.aka}
+            name="imageUrl"
+            placeholder="Insert image url... "
+            id="imageUrl"
+            value={med.imageUrl}
             onChange={handleChange}
+            className="input-text"
           />
-          <input type="submit" value="Create Medication" />
+          <br />
+          <input type="submit" value="Save" />
+          <button onClick={handleCancelClick}>Cancel</button>
         </div>
       </form>
     </div>

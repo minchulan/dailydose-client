@@ -3,42 +3,35 @@ import MedicationCard from "./MedicationCard";
 import { baseUrl } from "../globals";
 import SearchMedication from './SearchMedication';
 
-const MedicationPage = () => {
+const MedicationList = () => {
   const [medications, setMedications] = useState([]);
   const [filteredMedications, setFilteredMedications] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
-    const loadMedications = async () => {
-      const resp = await fetch(`${baseUrl}/medications`)
-      const data = await resp.json();
-      setMedications(data);
-      setFilteredMedications(data);
-      setLoading(false);
-    }
-    loadMedications();
+    fetch(`${baseUrl}/medications`)
+      .then(r => r.json())
+      .then(data => {
+        setMedications(data);
+        setFilteredMedications(data);
+        setLoading(false);
+      })
   }, [])
 
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <h2>Loading...</h2>;
   if (!medications) return null;
 
-  const deleteMedication = (id) => {
-    fetch(`${baseUrl}/medications/${id}`, {
-      method: "DELETE"
-    })
-    removeMedication(id)
-  }
-  const removeMedication = (id) => {
-    const updatedMedications = medications.filter(medication => medication.id !== id)
+  const handleDeleteMedication = (id) => {
+    const updatedMedications = medications.filter((medication) => medication.id !== id)
     setMedications(updatedMedications)
-  };
+  }
 
   const handleSearch = (term) => {
     setFilteredMedications(medications.filter((medication) => medication.medication_name.toLowerCase().includes(term.toLowerCase())))
   };
   
   const medicationCards = filteredMedications.map((medication) => (
-    <MedicationCard key={medication.id} medication={medication} patient={medication.patient} deleteMedication={deleteMedication} />
+    <MedicationCard key={medication.id} medication={medication} patient={medication.patient} onMedicationDelete={handleDeleteMedication}  />
   ));
 
   return (
@@ -51,4 +44,4 @@ const MedicationPage = () => {
 }
 
 
-export default MedicationPage
+export default MedicationList

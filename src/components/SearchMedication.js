@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 const SearchMedication = ({ handleSearch }) => {
   const [query, setQuery] = useState("");
+
   const handleChange = (e) => {
     setQuery(e.target.value)
     handleSearch(query)
@@ -15,7 +16,6 @@ const SearchMedication = ({ handleSearch }) => {
         id="search"
         name="search"
         placeholder="Search..."
-        autoComplete="off"
         value={query}
         onChange={handleChange} />
     </div>

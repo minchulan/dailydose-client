@@ -4,10 +4,10 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import ErrorPage from "./components/ErrorPage";
 import LoginForm from "./components/LoginForm";
-import PatientPage from "./components/PatientPage";
+import PatientList from "./components/PatientList";
 import PatientDetails from "./components/PatientDetails";
 import NewPatient from "./components/NewPatient";
-import MedicationPage from "./components/MedicationPage";
+import MedicationList from "./components/MedicationList";
 import NewMedication from "./components/NewMedication";
 import MedicationDetails from "./components/MedicationDetails";
 import EditPatient from "./components/EditPatient";
@@ -53,11 +53,11 @@ const App = () => {
             <NavBar />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/patients" component={PatientPage} />
+              <Route exact path="/patients" component={PatientList} />
               <Route exact path="/patients/new" component={NewPatient} />
               <Route exact path="/patients/:id/edit" component={EditPatient} />
               <Route exact path="/patients/:id" component={PatientDetails} />
-              <Route exact path="/medications" component={MedicationPage} />
+              <Route exact path="/medications" component={MedicationList} />
               <Route
                 exact
                 path="/patients/:patientId/medications/new"

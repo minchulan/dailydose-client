@@ -41,6 +41,7 @@ const NewPatient = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // persist new patient on server
     fetch(`${baseUrl}/patients`, {
       method: "POST",
       headers: {
@@ -49,7 +50,7 @@ const NewPatient = () => {
       body: JSON.stringify(newPatient),
     })
       .then((r) => r.json())
-      .then((newPatient) => setPatient(newPatient));
+      .then((newPatient) => console.log(newPatient));
     history.push("/patients");
   };
 
@@ -89,7 +90,7 @@ const NewPatient = () => {
         />
         <br />
 
-        <label htmlFor="gender">Gender(birth): </label>
+        <label htmlFor="gender">Gender (at birth): </label>
         <select name="gender">
           <option></option>
           <option value={patient.gender}>Male</option>
@@ -101,6 +102,7 @@ const NewPatient = () => {
           id="allergies"
           type="text"
           name="allergies"
+          placeholder="N/A if no allergies..."
           value={patient.allergies}
           onChange={handleChange}
         />
@@ -110,6 +112,7 @@ const NewPatient = () => {
           id="address"
           type="text"
           name="address"
+          placeholder="Street, state, zip..."
           value={patient.address}
           onChange={handleChange}
           required
@@ -130,13 +133,16 @@ const NewPatient = () => {
           id="phoneNumber"
           type="text"
           name="phoneNumber"
+          placeholder="000-000-0000"
           value={patient.phoneNumber}
           onChange={handleChange}
           required
         />
         <br />
         <input type="submit" value="Save" />
-        <button onClick={handleCancelClick}>Cancel</button>
+        <button type="button" onClick={handleCancelClick}>
+          Cancel
+        </button>
       </form>
     </>
   );

@@ -5,12 +5,10 @@ import { baseUrl } from "../globals";
 const initialState = {
   firstName: "",
   lastName: "",
-  birthday: "",
-  gender: "",
   allergies: "",
   address: "",
   email: "",
-  phoneNumber: "",
+  phoneNumber: ""
 };
 
 const EditPatient = () => {
@@ -21,16 +19,14 @@ const EditPatient = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const loadPatient = async () => {
-      console.log(id);
-      const resp = await fetch(`${baseUrl}/patients/${id}`);
-      const data = await resp.json();
-      setPatient(data);
-      setFormData(data);
-      setLoading(false);
-    };
-    loadPatient();
-  }, [id]);
+    fetch(`${baseUrl}/patients/${id}`)
+      .then(r => r.json())
+      .then(data => {
+        setPatient(data);
+        setFormData(data);
+        setLoading(false);
+    })
+  }, [id])
 
   const handleChange = (e) => {
     const key = e.target.name;
@@ -40,15 +36,27 @@ const EditPatient = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+    const data = {
+      ...formData,
+      [e.target.name]: e.target.value
+    };
+
+    console.log(data)
+    console.log(id)
+
+    // send data to server 
     fetch(`${baseUrl}/patients/${id}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ ...formData }),
-    });
+      body: JSON.stringify(data),
+    })
+      .then(r => r.json())
+      .then(console.log)
+    
     history.push(`/patients/${id}`);
   };
 
@@ -59,7 +67,8 @@ const EditPatient = () => {
   return (
     <div>
       <h2>Edit Patient</h2>
-      <form onSubmit={handleSubmit}>
+      {/* <h2>Edit Patient {patient.firstName}{patient.lastName}</h2> */}
+      <form onSubmit={handleFormSubmit}>
         <div>
           <label htmlFor="first-name">First Name: </label>
           <input
@@ -69,7 +78,7 @@ const EditPatient = () => {
             value={formData.firstName}
             onChange={handleChange}
             autoFocus={true}
-          />
+          />{" "}
           <label htmlFor="last-name">Last Name: </label>
           <input
             type="text"
@@ -79,42 +88,7 @@ const EditPatient = () => {
             onChange={handleChange}
             autoFocus={true}
           />
-          <label htmlFor="birthday">Birthday: </label>
-          <input
-            type="text"
-            name="birthday"
-            id="birthday"
-            value={formData.birthday}
-            onChange={handleChange}
-            autoFocus={true}
-          />
-          <label htmlFor="gender">Gender(birth): </label>
-          <select name="gender">
-            <option></option>
-            <option value={formData.gender}>Male</option>
-            <option value={formData.gender}>Female</option>
-          </select>
-
-          <label htmlFor="email">Email: </label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            value={formData.email}
-            onChange={handleChange}
-            autoFocus={true}
-          />
-
-          <label htmlFor="phoneNumber">Phone Number: </label>
-          <input
-            type="text"
-            name="phoneNumber"
-            id="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            autoFocus={true}
-          />
-
+          <br />
           <label htmlFor="allergies">Allergies: </label>
           <input
             type="text"
@@ -124,7 +98,27 @@ const EditPatient = () => {
             onChange={handleChange}
             autoFocus={true}
           />
-
+          <br />
+          <label htmlFor="email">Email: </label>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            value={formData.email}
+            onChange={handleChange}
+            autoFocus={true}
+          />
+          <br />
+          <label htmlFor="phoneNumber">Phone Number: </label>
+          <input
+            type="text"
+            name="phoneNumber"
+            id="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            autoFocus={true}
+          />
+          <br />
           <label htmlFor="address">Address: </label>
           <input
             type="text"
@@ -143,3 +137,26 @@ const EditPatient = () => {
 };
 
 export default EditPatient;
+
+
+// Clicking the 'edit' button on a patient field should toggle between showing the EditPatient component, and the patient.
+
+// When the EditPatient form is submitted, make a PATCH request to /patients/:id with an object update of the request:
+// {
+//   "patient": { 
+          // {
+              //  "first_name": "edited first name"
+              //  "last_name": "edited last name"
+              //  "birthday": "edited birthday"
+          // }
+//   }
+// }
+
+// Once you have successfully saved the edited patient on the server, find a way to update the patient in the web application as well. You should also change the PatientPage component state to leave 'editing' mode.
+
+// For each feature, think about:
+// - Do we need state?
+//     - Where should that state live?
+// - What props do I need?
+// - How can I pass data to the components that need it?
+// */
