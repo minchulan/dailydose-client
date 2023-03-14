@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom';
 
 const Home = () => {
     const history = useHistory();
-    
+
     const routePatientChange = () => {
         history.push('/patients')
     };
-
+    
     const routeMedicationChange = () => {
         history.push("/medications/");
     };

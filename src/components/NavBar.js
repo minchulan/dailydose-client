@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Breadcrumbs from './Breadcrumbs';
 
 const style = { 
   width: "60%",
@@ -13,34 +14,37 @@ const style = {
 
 const NavBar = () => {
   return (
-    <nav className="NavBarItems">
-      <h1 className="navbar-logo">Daily Dose</h1>
-      <div className="menu-icon"></div>
-      <NavLink
-        activeStyle={{ fontWeight: "bolder" }}
-        exact
-        style={style}
-        to="/"
-      >
-        Home
-      </NavLink>
-      <NavLink
-        activeStyle={{ fontWeight: "bolder" }}
-        exact
-        style={style}
-        to="/patients"
-      >
-        Patients
-      </NavLink>
-      <NavLink
-        activeStyle={{ fontWeight: "bolder" }}
-        exact
-        style={style}
-        to="/medications"
-      >
-        Medications
-      </NavLink>
-    </nav>
+    <>
+      <nav className="NavBarItems">
+        <h1 className="navbar-logo">Daily Dose</h1>
+        <div className="menu-icon"></div>
+        <NavLink
+          activeStyle={{ fontWeight: "bolder" }}
+          exact
+          style={style}
+          to="/"
+        >
+          Home
+        </NavLink>
+        <NavLink
+          activeStyle={{ fontWeight: "bolder" }}
+          exact
+          style={style}
+          to="/patients"
+        >
+          Patients
+        </NavLink>
+        <NavLink
+          activeStyle={{ fontWeight: "bolder" }}
+          exact
+          style={style}
+          to="/medications"
+        >
+          Medications
+        </NavLink>
+        <Breadcrumbs />
+      </nav>
+    </>
   );
 }
   

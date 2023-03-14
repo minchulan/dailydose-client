@@ -12,7 +12,6 @@ import NewMedication from "./components/NewMedication";
 import MedicationDetails from "./components/MedicationDetails";
 import EditPatient from "./components/EditPatient";
 
-// App just handles the login and routing
 const App = () => {
   const [user, setUser] = useState({ name: "", email: "" });
   const [error, setError] = useState("");
@@ -56,7 +55,7 @@ const App = () => {
               <Route exact path="/patients" component={PatientList} />
               <Route exact path="/patients/new" component={NewPatient} />
               <Route exact path="/patients/:id/edit" component={EditPatient} />
-              <Route exact path="/patients/:id" component={PatientDetails} />
+              <Route exact path="/patients/:id" component={PatientDetails} /> 
               <Route exact path="/medications" component={MedicationList} />
               <Route
                 exact
@@ -85,3 +84,7 @@ const App = () => {
 };
 
 export default App;
+
+
+// NOTES: -------------------------------------------
+// App just handles the login and routing

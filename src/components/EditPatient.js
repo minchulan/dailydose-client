@@ -17,7 +17,7 @@ const EditPatient = () => {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const history = useHistory();
-
+ 
   useEffect(() => {
     fetch(`${baseUrl}/patients/${id}`)
       .then(r => r.json())
@@ -43,10 +43,6 @@ const EditPatient = () => {
       [e.target.name]: e.target.value
     };
 
-    console.log(data)
-    console.log(id)
-
-    // send data to server 
     fetch(`${baseUrl}/patients/${id}`, {
       method: "PATCH",
       headers: {
@@ -54,10 +50,7 @@ const EditPatient = () => {
       },
       body: JSON.stringify(data),
     })
-      .then(r => r.json())
-      .then(console.log)
-    
-    history.push(`/patients/${id}`);
+    history.push(`/patients/${id}`)
   };
 
   if (loading) {
@@ -66,8 +59,7 @@ const EditPatient = () => {
 
   return (
     <div>
-      <h2>Edit Patient</h2>
-      {/* <h2>Edit Patient {patient.firstName}{patient.lastName}</h2> */}
+      <h2>Edit Patient for </h2>
       <form onSubmit={handleFormSubmit}>
         <div>
           <label htmlFor="first-name">First Name: </label>
@@ -77,7 +69,6 @@ const EditPatient = () => {
             id="first-name"
             value={formData.firstName}
             onChange={handleChange}
-            autoFocus={true}
           />{" "}
           <label htmlFor="last-name">Last Name: </label>
           <input
@@ -86,7 +77,6 @@ const EditPatient = () => {
             id="last-name"
             value={formData.lastName}
             onChange={handleChange}
-            autoFocus={true}
           />
           <br />
           <label htmlFor="allergies">Allergies: </label>
@@ -96,7 +86,6 @@ const EditPatient = () => {
             id="allergies"
             value={formData.allergies}
             onChange={handleChange}
-            autoFocus={true}
           />
           <br />
           <label htmlFor="email">Email: </label>
@@ -106,7 +95,6 @@ const EditPatient = () => {
             id="email"
             value={formData.email}
             onChange={handleChange}
-            autoFocus={true}
           />
           <br />
           <label htmlFor="phoneNumber">Phone Number: </label>
@@ -116,7 +104,6 @@ const EditPatient = () => {
             id="phoneNumber"
             value={formData.phoneNumber}
             onChange={handleChange}
-            autoFocus={true}
           />
           <br />
           <label htmlFor="address">Address: </label>
@@ -126,7 +113,6 @@ const EditPatient = () => {
             id="address"
             value={formData.address}
             onChange={handleChange}
-            autoFocus={true}
           />
         </div>
         <br />
@@ -138,6 +124,10 @@ const EditPatient = () => {
 
 export default EditPatient;
 
+
+// NOTES -----------------------------------------------------
+
+// <h2>Edit Patient for {patient.firstName} {patient.lastName} </h2> = ERROR on LINE 62!
 
 // Clicking the 'edit' button on a patient field should toggle between showing the EditPatient component, and the patient.
 

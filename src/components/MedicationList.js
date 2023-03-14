@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import MedicationCard from "./MedicationCard";
 import { baseUrl } from "../globals";
+import MedicationCard from "./MedicationCard";
 import SearchMedication from './SearchMedication';
 
 const MedicationList = () => {
   const [medications, setMedications] = useState([]);
-  const [filteredMedications, setFilteredMedications] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -13,7 +12,6 @@ const MedicationList = () => {
       .then(r => r.json())
       .then(data => {
         setMedications(data);
-        setFilteredMedications(data);
         setLoading(false);
       })
   }, [])
@@ -26,22 +24,35 @@ const MedicationList = () => {
     setMedications(updatedMedications)
   }
 
-  const handleSearch = (term) => {
-    setFilteredMedications(medications.filter((medication) => medication.medication_name.toLowerCase().includes(term.toLowerCase())))
+  const handleSearchMedication = (term) => {
+    const filteredMedicationResults = medications.filter((medication) => medication.medication_name.toLowerCase().includes(term.toLowerCase()));
+    setMedications(filteredMedicationResults)
   };
   
-  const medicationCards = filteredMedications.map((medication) => (
-    <MedicationCard key={medication.id} medication={medication} patient={medication.patient} onMedicationDelete={handleDeleteMedication}  />
+  const medicationCards = medications.map((medication) => (
+    <MedicationCard
+      key={medication.id}
+      medication={medication}
+      patient={medication.patient}
+      onMedicationDelete={handleDeleteMedication}
+    />
   ));
 
   return (
     <div>
       <h2>Medications</h2>
-      <SearchMedication handleSearch={handleSearch} />
+      <SearchMedication handleSearchMedication={handleSearchMedication} />
       {medicationCards}
     </div>
   );
 }
 
+export default MedicationList;
 
-export default MedicationList
+
+
+// NOTES --------------------------------------------------------
+  // const handleAddMedication = (newMedication) => {
+  //   const updatedMedications = [...medications, newMedication]
+  //   setMedications(updatedMedications);
+  // };

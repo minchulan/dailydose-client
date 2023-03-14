@@ -17,17 +17,6 @@ const NewPatient = () => {
   const [patient, setPatient] = useState(initialPatientState);
   const history = useHistory();
 
-  const newPatient = {
-    first_name: patient.firstName,
-    last_name: patient.lastName,
-    birthday: patient.birthday,
-    gender: patient.gender,
-    allergies: patient.allergies,
-    address: patient.address,
-    email: patient.email,
-    phone_number: patient.phoneNumber,
-  };
-
   const handleChange = (e) => {
     setPatient({
       ...patient,
@@ -39,9 +28,20 @@ const NewPatient = () => {
     history.push("/patients");
   };
 
-  const handleSubmit = (e) => {
+  const addPatient = (e) => {
+    const newPatient = {
+      first_name: patient.firstName,
+      last_name: patient.lastName,
+      birthday: patient.birthday,
+      gender: patient.gender,
+      allergies: patient.allergies,
+      address: patient.address,
+      email: patient.email,
+      phone_number: patient.phoneNumber,
+    };
+
     e.preventDefault();
-    // persist new patient on server
+
     fetch(`${baseUrl}/patients`, {
       method: "POST",
       headers: {
@@ -50,13 +50,13 @@ const NewPatient = () => {
       body: JSON.stringify(newPatient),
     })
       .then((r) => r.json())
-      .then((newPatient) => console.log(newPatient));
+      .then((data) => console.log(data));
     history.push("/patients");
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={addPatient}>
         <label htmlFor="firstName">First name: </label>
         <input
           id="firstName"
@@ -89,7 +89,6 @@ const NewPatient = () => {
           required
         />
         <br />
-
         <label htmlFor="gender">Gender (at birth): </label>
         <select name="gender">
           <option></option>
@@ -150,6 +149,8 @@ const NewPatient = () => {
 
 export default NewPatient;
 
+// NOTES: ---------------------------------------------------------------------
+
 // if (
 //   [
 //     patient.firstName,
@@ -160,3 +161,7 @@ export default NewPatient;
 //   ].some((val) => val.trim() === "")
 // )
 //   alert("Please fill in all of the information!");
+
+// set up as a controlled form. when form submits, should be able to console log all the text fields.
+// persist new patient on server. need to send server specifically formatted object.
+// then use onAddPatient callback function to pass the new patient we get back from the server up to the parent component so we can add that new patient to state.

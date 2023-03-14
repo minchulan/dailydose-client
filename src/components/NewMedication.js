@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { baseUrl } from '../globals';
 
-
 const initialMedicationState = {
   medicationName: "",
   thcStrength: "",
@@ -15,28 +14,13 @@ const initialMedicationState = {
   imageUrl: ""
 };
 
-// persist new medication on server
-// then use onAddMedication to add medication to state 
-
-const NewMedication = () => {
+const NewMedication = ({onAddMedication}) => {
   const [patient, setPatient] = useState(null);
   const [med, setMed] = useState(initialMedicationState);
   const [loading, setLoading] = useState(true);
   const { patientId } = useParams();
   const history = useHistory();
 
-    const newMedication = {
-      medication_name: med.medicationName,
-      aka: med.aka,
-      thc_strength: med.thcStrength,
-      cbd_strength: med.cbdStrength,
-      feelings: med.feelings,
-      negatives: med.negatives,
-      helps_with:med.helpsWith,
-      details: med.details,
-      image_url: med.imageUrl
-    };
-  
   useEffect(() => {
     fetch(`${baseUrl}/patients/${patientId}`)
       .then(r => r.json())
@@ -51,35 +35,45 @@ const NewMedication = () => {
   const handleChange = (e) => {
     setMed({
       ...med,
-      [e.target.name]: e.target.value 
+      [e.target.name]: e.target.value
     })
-  }
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const headers = {
-      'Content-Type': 'application/json'
-    }
-    const options = {
-      method: "POST",
-      headers,
-      body: JSON.stringify(newMedication)
-    }
-    await fetch(`${baseUrl}/patients/${patientId}/medications`, options)
-
-    history.push(`/patients/${patientId}`);
-  }
+  };
 
   const handleCancelClick = (e) => {
     e.preventDefault();
-    history.push(`/patients`)
+    history.push(`/patients`);
+  };
+
+  const addMedication = (e) => {
+
+    const newMedication = {
+      medication_name: med.medicationName,
+      aka: med.aka,
+      thc_strength: med.thcStrength,
+      cbd_strength: med.cbdStrength,
+      feelings: med.feelings,
+      negatives: med.negatives,
+      helps_with: med.helpsWith,
+      details: med.details,
+      image_url: med.imageUrl,
+    };
+  
+    e.preventDefault();
+
+    fetch(`${baseUrl}/patients/${patientId}/medications`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newMedication)
+    })
+      history.push(`/patients/${patientId}`)
   };
 
   return (
     <div>
-      <h2>Create Medication </h2>
-      {/* <h2>Create Medication{patient.first_name} {patient.last_name}</h2> */}
-      <form onSubmit={handleSubmit}>
+      <h2>Create Medication for </h2>
+      <form onSubmit={addMedication}>
         <div>
           <label htmlFor="medicationName">Name: </label>
           <input
@@ -98,7 +92,7 @@ const NewMedication = () => {
             name="aka"
             placeholder="Also known as..."
             id="aka"
-            value={newMedication.aka}
+            value={med.aka}
             onChange={handleChange}
             className="input-text"
           />
@@ -181,7 +175,7 @@ const NewMedication = () => {
           />
           <br />
           <input type="submit" value="Save" />
-          <button onClick={handleCancelClick}>Cancel</button>
+          <button type="button" onClick={handleCancelClick}>Cancel</button>
         </div>
       </form>
     </div>
@@ -189,3 +183,18 @@ const NewMedication = () => {
 }
 
 export default NewMedication
+
+
+// NOTES: -----------------------------------------------------
+
+// persist new medication on server
+// then use onAddMedication to add medication to state 
+
+  
+  // /* <h2>Create Medication{patient.first_name} {patient.last_name}</h2> */ LINE 77 ERROR
+
+  // history.push works....
+  // how to pass up callback function to parent component NavLink ???
+        // .then((r) => r.json())
+      // .then(data => onAddMedication(data))
+      

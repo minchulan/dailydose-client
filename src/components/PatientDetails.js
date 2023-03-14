@@ -4,7 +4,7 @@ import MedicationCard from './MedicationCard';
 import { baseUrl } from '../globals';
 import { NavLink } from 'react-router-dom';
 
-const PatientDetails = () => {
+const PatientDetails = ({onUpdatePatient}) => {
   const [patient, setPatient] = useState(null)
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
@@ -72,7 +72,9 @@ const PatientDetails = () => {
         <h5>{medicationCards}</h5>
       </div>
     );
-
 }
 
 export default PatientDetails
+
+
+// NOTES: ----------------------------------------------------

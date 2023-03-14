@@ -21,4 +21,6 @@ const PatientCard = ({ patient, onPatientDelete }) => {
 
 export default PatientCard;
 
+
+// NOTES: -------------------------------------------------------------------
 // when the delete button is clicked, make a DELETE request to /patients/:id. Also, remove the patient from the PatientList.

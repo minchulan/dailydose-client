@@ -6,33 +6,33 @@ import SearchPatient from "./SearchPatient";
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
-  const [filteredPatients, setFilteredPatients] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetch(`${baseUrl}/patients`)
-      .then(r => r.json())
-      .then(data => {
+      .then((r) => r.json())
+      .then((data) => {
         setPatients(data);
-        setFilteredPatients(data);
         setLoading(false);
-    })
-  }, [])
+      });
+  }, []);
 
   if (loading) return <h2>Loading...</h2>;
   if (!patients) return null;
 
   const handleDeletePatient = (id) => {
-    const updatedPatients = patients.filter((patient) => patient.id !== id)
-    setPatients(updatedPatients)
-  }
+    const updatedPatients = patients.filter((patient) => patient.id !== id);
+    setPatients(updatedPatients);
+  };
 
   const handleSearchPatient = (term) => {
-    const filteredPatientResults = patients.filter((patient) => patient.first_name.toLowerCase().includes(term.toLowerCase())); 
-    setFilteredPatients(filteredPatientResults);
+    const filteredPatientResults = patients.filter((patient) =>
+      patient.first_name.toLowerCase().includes(term.toLowerCase())
+    );
+    setPatients(filteredPatientResults);
   };
-  
-  const patientCards = filteredPatients.map((patient) => (
+
+  const patientCards = patients.map((patient) => (
     <PatientCard
       key={patient.id}
       patient={patient}
@@ -46,7 +46,7 @@ const PatientList = () => {
       <br />
       <h2>Patients</h2>
       <h4>{<NavLink to="/patients/new">+ Create </NavLink>}</h4>
-      <SearchPatient handleSearchPatient={handleSearchPatient}/>
+      <SearchPatient handleSearchPatient={handleSearchPatient} />
       <h4>{patientCards}</h4>
     </div>
   );
@@ -56,8 +56,55 @@ export default PatientList;
 
 
 
-/*
+// NOTES -------------------------------------------------------------------
+// child of app
+// gets the array of patients
+// renders each individual patient card
 
+
+// when patientList component first loads, make a fetch request to update state variable of patients to include all the patients from my Sinatra API
+// fetch patients as part of our app components lifecycle, need to use the useEffect hook. Call the useEffect hook and pass in callback function, and empty deps array as second argument. When our patientList component loads as a side effect, will run this call back function and trigger this fetch request. Use the array of patients to set that piece of state.
+
+
+//line 48 replacement: does not work 
+      // {
+        /* <h4> */
+      // }
+      // {
+        /* <NavLink
+          to={{
+            pathname: "/patients/new",
+            state: { onAddPatient: handleAddPatient },
+          }}
+        >
+          + Create
+        </NavLink>
+      </h4> */
+      // }
+
+
+  // can't figure out how to pass up a callback function onAddPatient to NavLink in parent component
+  // history.push works tho....
+  // const handleAddPatient = (newPatient) => {
+  //   const updatedPatients = [...patients, newPatient];
+  //   setPatients(updatedPatients);
+  // };
+
+
+
+  // can't figure out how to pass up a callback function onEditPatient to NavLink in parent component
+  // history.push does NOT work...
+  // const handleEditPatient = (updatedPatientObject) => {
+  //   const updatedPatients = patients.map(patient => {
+  //     if (patient.id === updatedPatientObject.id) {
+  //       return updatedPatientObject
+  //     }
+  //   })
+  //   setPatients(updatedPatients)
+  // };
+
+
+/*
 // when the delete button is clicked, make a DELETE request to /patients/:id. Also, remove the patient from the PatientList.
 
 Question: Is it better to keep all of our fetches/state in a container and pass down state and callbacks as props -OR- to add state and fetch calls throughout the component hierarchy where necessary? 
@@ -84,5 +131,4 @@ Option 2: Get only the primary records within the list view ( / patients ) [Pati
 
 
 Conclusion: Option 1 simplifies our react state logic. If our app grows a lot, and we start having performance issues, we can think about reworking our approach, but for the start it will work fine to always return the related objects as a property (medications within each patient) and it'll be much easier to work with on the react end at this point. 
-
 */
