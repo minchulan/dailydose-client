@@ -10,9 +10,11 @@ import MedicationList from "./components/MedicationList";
 import NewMedication from "./components/NewMedication";
 import MedicationDetails from "./components/MedicationDetails";
 import EditPatient from "./components/EditPatient";
+import Breadcrumbs from "./components/Breadcrumbs";
 
 const App = () => {
   const [patients, setPatients] = useState([]);
+  const [medications, setMedications] = useState([])
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -24,6 +26,15 @@ const App = () => {
         setLoading(false);
       });
   }, []);
+
+    useEffect(() => {
+      fetch(`http://localhost:9292/medications`)
+        .then((r) => r.json())
+        .then((data) => {
+          setMedications(data);
+          setLoading(false);
+        });
+    }, []);
 
 
   if (loading) return <h2>Loading...</h2>;
@@ -79,22 +90,23 @@ const App = () => {
           <Route exact path="/patients/new">
             <NewPatient onAddPatient={handleAddPatient} />
           </Route>
-          <Route exact path="/patients/:id/edit">
+          <Route path="/patients/:id/edit">
             <EditPatient onUpdatePatient={handleUpdatePatient} />
           </Route>
           <Route exact path="/patients/:id">
-            <PatientDetails />
+            <PatientDetails patients={patients} />
           </Route>
           <Route exact path="/medications">
-            <MedicationList />
+            <MedicationList medications={medications} setMedications={setMedications} />
           </Route>
-          <Route exact path="/patients/:patientId/medications/new">
+          <Route path="/patients/:patientId/medications/new">
             <NewMedication />
           </Route>
-          <Route exact path="/medications/:id">
-            <MedicationDetails />
+          <Route path="/medications/:id">
+            <MedicationDetails medications={medications} />
           </Route>
           <Route component={ErrorPage} />
+          <Breadcrumbs />
         </Switch>
       </Router>
     </div>

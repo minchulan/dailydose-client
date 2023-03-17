@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-
 const MedicationCard = ({ medication, patient, onMedicationDelete}) => {
   const { id, medication_name: medicationName } = medication;
 

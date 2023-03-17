@@ -1,36 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
 import MedicationCard from "./MedicationCard";
-import SearchMedication from './SearchMedication';
+import SearchMedication from "./SearchMedication";
 
-const MedicationList = () => {
-  const [medications, setMedications] = useState([]);
+const MedicationList = ({ medications, setMedications }) => {
   const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    fetch(`http://localhost:9292/medications`)
-      .then(r => r.json())
-      .then(data => {
-        setMedications(data);
-        setLoading(false);
-      })
-  }, [])
-
-  if (loading) return <h2>Loading...</h2>;
-  if (!medications) return null;
 
   const handleDeleteMedication = (id) => {
-    const updatedMedications = medications.filter((medication) => medication.id !== id)
-    setMedications(updatedMedications)
+    const updatedMedications = medications.filter(
+      (medication) => medication.id !== id
+    );
+    setMedications(updatedMedications);
   };
 
   const handleQueryChange = (newQuery) => {
-    setQuery(newQuery)
-  }
+    setQuery(newQuery);
+  };
 
-  const displayedMedications = medications.filter((medication) => medication.medication_name.toLowerCase().includes(query.toLowerCase()));
+  const displayedMedications = medications.filter((medication) =>
+    medication.medication_name.toLowerCase().includes(query.toLowerCase())
+  );
 
-  
   const medicationCards = displayedMedications.map((medication) => (
     <MedicationCard
       key={medication.id}
@@ -43,28 +32,23 @@ const MedicationList = () => {
   return (
     <div>
       <h2>Medications</h2>
-      <SearchMedication
-        onQueryChange={handleQueryChange}
-      />
+      <SearchMedication onQueryChange={handleQueryChange} />
       {medicationCards}
     </div>
   );
-}
+};
 
 export default MedicationList;
-
-
 
 // NOTES --------------------------------------------------------
 
 //medications_controller.rb:
-    // get '/medications' do 
-    //     @medications = Medication.all.order(:medication_name).limit(10)
-    //     @medications.to_json(include: [:patient], except: [:created_at, :updated_at])
-    // end 
-    
+// get '/medications' do
+//     @medications = Medication.all.order(:medication_name).limit(10)
+//     @medications.to_json(include: [:patient], except: [:created_at, :updated_at])
+// end
 
-  // const handleAddMedication = (newMedication) => {
-  //   const updatedMedications = [...medications, newMedication]
-  //   setMedications(updatedMedications);
-  // };
+// const handleAddMedication = (newMedication) => {
+//   const updatedMedications = [...medications, newMedication]
+//   setMedications(updatedMedications);
+// };
