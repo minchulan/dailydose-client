@@ -18,9 +18,6 @@ To install, just fork and clone this repository. Once you cloned it in your term
 
 The screenshots below demonstrate the working functionality of the app:
 
-
-<img width="882" alt="CleanShot 2023-03-17 at 11 07 49@2x" src="https://user-images.githubusercontent.com/108310591/225974092-4424ebf7-6fd7-41be-bb1a-b5f1a626c1b8.png">
-
 ![CleanShot 2023-03-17 at 11 13 00](https://user-images.githubusercontent.com/108310591/225974164-41dc7b42-dbfa-4182-a145-64b16030a813.png)
 
 ![CleanShot 2023-03-17 at 11 13 17](https://user-images.githubusercontent.com/108310591/225974185-abcf702c-f587-4a37-befc-8d7cc2764755.png)
