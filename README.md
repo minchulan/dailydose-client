@@ -21,13 +21,18 @@ The screenshots below demonstrate the working functionality of the app:
 
 <img width="882" alt="CleanShot 2023-03-17 at 11 07 49@2x" src="https://user-images.githubusercontent.com/108310591/225974092-4424ebf7-6fd7-41be-bb1a-b5f1a626c1b8.png">
 ![CleanShot 2023-03-17 at 11 13 00](https://user-images.githubusercontent.com/108310591/225974164-41dc7b42-dbfa-4182-a145-64b16030a813.png)
-![CleanShot 2023-03-17 at 11 13 17](https://user-images.githubusercontent.com/108310591/225974185-abcf702c-f587-4a37-befc-8d7cc2764755.png)
-![CleanShot 2023-03-17 at 11 13 39](https://user-images.githubusercontent.com/108310591/225974197-586c36d9-8a02-4473-94e7-34c947e28f28.png)
-![CleanShot 2023-03-17 at 11 13 56](https://user-images.githubusercontent.com/108310591/225974205-f2ba88ce-805a-4674-b18d-552fd9a9ce6e.png)
-![CleanShot 2023-03-17 at 11 14 10](https://user-images.githubusercontent.com/108310591/225974212-5a190aa3-c887-4692-b33a-e5e109b9b729.png)
-![CleanShot 2023-03-17 at 11 14 24](https://user-images.githubusercontent.com/108310591/225974222-2b7819c1-ee35-481a-9560-c0e0e57add11.png)
-![CleanShot 2023-03-17 at 11 14 51](https://user-images.githubusercontent.com/108310591/225974231-7d577931-e219-4521-9681-351ed9122729.png)
 
+![CleanShot 2023-03-17 at 11 13 17](https://user-images.githubusercontent.com/108310591/225974185-abcf702c-f587-4a37-befc-8d7cc2764755.png)
+
+![CleanShot 2023-03-17 at 11 13 39](https://user-images.githubusercontent.com/108310591/225974197-586c36d9-8a02-4473-94e7-34c947e28f28.png)
+
+![CleanShot 2023-03-17 at 11 13 56](https://user-images.githubusercontent.com/108310591/225974205-f2ba88ce-805a-4674-b18d-552fd9a9ce6e.png)
+
+![CleanShot 2023-03-17 at 11 14 10](https://user-images.githubusercontent.com/108310591/225974212-5a190aa3-c887-4692-b33a-e5e109b9b729.png)
+
+![CleanShot 2023-03-17 at 11 14 24](https://user-images.githubusercontent.com/108310591/225974222-2b7819c1-ee35-481a-9560-c0e0e57add11.png)
+
+![CleanShot 2023-03-17 at 11 14 51](https://user-images.githubusercontent.com/108310591/225974231-7d577931-e219-4521-9681-351ed9122729.png)
 
 
 ## Available Scripts
