@@ -66,6 +66,8 @@ const NewMedication = ({onAddMedication}) => {
       },
       body: JSON.stringify(newMedication)
     })
+      .then(r => r.json())
+      .then(data => onAddMedication(data))
       history.push(`/patients/${patientId}`)
   };
 

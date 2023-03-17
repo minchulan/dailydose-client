@@ -1,3 +1,7 @@
+.App {
+    color: rgb(48, 48, 247);
+    text-align: justify;
+}
 
 /* breadcrumbs */
 .breadcrumbs {

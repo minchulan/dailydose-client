@@ -10,7 +10,7 @@ const initialState = {
   phone_number: "",
 };
 
-const EditPatient = ({onUpdatePatient}) => {
+const EditPatient = ({ onUpdatePatient }) => {
   const [formData, setFormData] = useState(initialState);
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -53,9 +53,9 @@ const EditPatient = ({onUpdatePatient}) => {
       },
       body: JSON.stringify(data),
     })
-      .then(r => r.json())
-      .then(data => onUpdatePatient(data))
-    
+      .then((r) => r.json())
+      .then((data) => onUpdatePatient(data));
+
     history.push(`/patients/${id}`);
   };
 
@@ -134,6 +134,22 @@ const EditPatient = ({onUpdatePatient}) => {
 export default EditPatient;
 
 // NOTES -----------------------------------------------------
+// here we are retrieving related records via our API (show page) and persisting them to React state. 
+
+
+// patients_controller.rb:
+    // patch '/patients/:id' do
+    //     @patient = Patient.find_by_id(params[:id])
+    //     if @patient.update(first_name:params[:first_name], last_name:params[:last_name], birthday:params[:birthday], allergies:params[:allergies], email:params[:email], phone_number:params[:phone_number], address:params[:address])
+    //         @patient.to_json
+    //     else
+    //         { errors: @patient.errors.full_messages.to_sentences }.to_json
+    //     end
+    // end
+    
+    
+
+// line 34: computed property used to specify a dynamic value. [key]: e.target.value
 
 // <h2>Edit Patient for {patient.firstName} {patient.lastName} </h2> = ERROR on LINE 62!
 

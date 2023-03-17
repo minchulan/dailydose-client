@@ -71,3 +71,11 @@ const MedicationDetails = () => {
 }
 
 export default MedicationDetails
+
+// NOTES: ------------------------------------------
+// here from medication details page , we have the ability to retrieve the patients on that particular medication. 
+// retrieving related records via our API and persisting them to React state. 
+    // get '/medications/:id' do
+    //     @medication = Medication.find_by_id(params[:id])
+    //     @medication.to_json(include: [:patient])
+    // end

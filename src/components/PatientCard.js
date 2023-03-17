@@ -24,3 +24,14 @@ export default PatientCard;
 
 // NOTES: -------------------------------------------------------------------
 // when the delete button is clicked, make a DELETE request to /patients/:id. Also, remove the patient from the PatientList.
+
+
+// patients_controller.rb: 
+    // delete '/patients/:id' do 
+    //     @patient = Patient.find_by_id(params[:id])
+    //     if @patient
+    //         @patient.destroy 
+    //     else  
+    //         { errors: ["Patient Doesn't Exist"] }.to_json
+    //     end 
+    // end 

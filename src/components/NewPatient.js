@@ -150,6 +150,18 @@ const NewPatient = ({onAddPatient}) => {
 export default NewPatient;
 
 // NOTES: ---------------------------------------------------------------------
+
+// patients_controller.rb:
+    // post '/patients' do
+    //     @patient = Patient.new(params)
+    //     if @patient.save
+    //         @patient.to_json
+    //     else
+    //         { errors: @patient.errors.full_messages.to_sentences }.to_json 
+    //     end
+    // end
+    
+    
 // line 39:     // this should be enough to insert something to database (after passing validation).
     // when it's done, send me away to the patientList page. 
 // if (

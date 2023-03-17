@@ -77,6 +77,14 @@ export default PatientDetails
 
 
 // NOTES: ----------------------------------------------------
+// from the patient details page, we have the ability to create medications for a patient from the patient detail page and to display them.
+
+// retrieving related records via our API and persisting them to React state. 
+    // get '/patients/:id' do
+    //     @patient = Patient.find_by_id(params[:id])
+    //     @patient.to_json(include: [:medications])
+    // end 
+
 // ability to do some dynamic routing. When component loads, we fetch info about that specific patient using id. 
 // use that display all patient info on its own page. 
 // line 38:   // we have a patient in state. now we want to map over the patient's medications. to access patient's medications use patient.medications.
