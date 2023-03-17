@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MedicationCard from './MedicationCard';
-import { baseUrl } from '../globals';
 import { NavLink } from 'react-router-dom';
 
-const PatientDetails = ({onUpdatePatient}) => {
-  const [patient, setPatient] = useState(null)
+const PatientDetails = () => {
+  const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`${baseUrl}/patients/${id}`)
+    fetch(`http://localhost:9292/patients/${id}`)
       .then(r => r.json())
       .then(data => {
         setPatient(data);
@@ -21,7 +20,7 @@ const PatientDetails = ({onUpdatePatient}) => {
   if (loading) return <h2>Loading....</h2>;
 
   const deleteMedication = (id) => {
-    fetch(`${baseUrl}/medications/${id}`, {
+    fetch(`http://localhost:9292/medications/${id}`, {
       method: "DELETE"
     })
     removeMedication(id);
@@ -68,7 +67,7 @@ const PatientDetails = ({onUpdatePatient}) => {
           📧 {patient.email} ⎮ ✆ {patient.phone_number}
         </h5>
         <hr />
-        <h4>Current Medications</h4>
+        <h4>Current Medications:</h4>
         <h5>{medicationCards}</h5>
       </div>
     );
@@ -78,3 +77,6 @@ export default PatientDetails
 
 
 // NOTES: ----------------------------------------------------
+// ability to do some dynamic routing. When component loads, we fetch info about that specific patient using id. 
+// use that display all patient info on its own page. 
+// line 38:   // we have a patient in state. now we want to map over the patient's medications. to access patient's medications use patient.medications.

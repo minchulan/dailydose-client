@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { baseUrl } from '../globals';
 
 const MedicationDetails = () => {
     const [medication, setMedication] = useState(null);
@@ -10,7 +9,7 @@ const MedicationDetails = () => {
 
     useEffect(() => {
         const loadMedication = () => {
-            fetch(`${baseUrl}/medications/${id}`)
+            fetch(`http://localhost:9292/medications/${id}`)
                 .then(r => r.json())
                 .then(data => setMedication(data))
         }

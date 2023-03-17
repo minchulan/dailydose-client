@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { baseUrl } from "../globals";
 import MedicationCard from "./MedicationCard";
 import SearchMedication from './SearchMedication';
 
 const MedicationList = () => {
   const [medications, setMedications] = useState([]);
+  const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`${baseUrl}/medications`)
+    fetch(`http://localhost:9292/medications`)
       .then(r => r.json())
       .then(data => {
         setMedications(data);
@@ -22,14 +22,16 @@ const MedicationList = () => {
   const handleDeleteMedication = (id) => {
     const updatedMedications = medications.filter((medication) => medication.id !== id)
     setMedications(updatedMedications)
+  };
+
+  const handleQueryChange = (newQuery) => {
+    setQuery(newQuery)
   }
 
-  const handleSearchMedication = (term) => {
-    const filteredMedicationResults = medications.filter((medication) => medication.medication_name.toLowerCase().includes(term.toLowerCase()));
-    setMedications(filteredMedicationResults)
-  };
+  const displayedMedications = medications.filter((medication) => medication.medication_name.toLowerCase().includes(query.toLowerCase()));
+
   
-  const medicationCards = medications.map((medication) => (
+  const medicationCards = displayedMedications.map((medication) => (
     <MedicationCard
       key={medication.id}
       medication={medication}
@@ -41,7 +43,9 @@ const MedicationList = () => {
   return (
     <div>
       <h2>Medications</h2>
-      <SearchMedication handleSearchMedication={handleSearchMedication} />
+      <SearchMedication
+        onQueryChange={handleQueryChange}
+      />
       {medicationCards}
     </div>
   );

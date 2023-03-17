@@ -1,12 +1,12 @@
 import React from "react";
+import { Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { baseUrl } from "../globals";
 
 const PatientCard = ({ patient, onPatientDelete }) => {
   const { id, first_name: firstName , last_name: lastName } = patient;
 
   const handleDeleteClick = () => {
-    fetch(`${baseUrl}/patients/${id}`, {
+    fetch(`http://localhost:9292/patients/${id}`, {
       method: "DELETE"
     })
     onPatientDelete(id)

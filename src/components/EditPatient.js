@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { baseUrl } from "../globals";
 
 const initialState = {
-  firstName: "",
-  lastName: "",
+  first_name: "",
+  last_name: "",
   allergies: "",
   address: "",
   email: "",
-  phoneNumber: ""
+  phone_number: "",
 };
 
-const EditPatient = () => {
+const EditPatient = ({onUpdatePatient}) => {
   const [formData, setFormData] = useState(initialState);
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const history = useHistory();
- 
+
   useEffect(() => {
-    fetch(`${baseUrl}/patients/${id}`)
-      .then(r => r.json())
-      .then(data => {
+    fetch(`http://localhost:9292/patients/${id}`)
+      .then((r) => r.json())
+      .then((data) => {
         setPatient(data);
         setFormData(data);
         setLoading(false);
-    })
-  }, [id])
+      });
+  }, [id]);
 
   const handleChange = (e) => {
     const key = e.target.name;
@@ -36,21 +35,28 @@ const EditPatient = () => {
     });
   };
 
+  const handleCancelClick = () => {
+    history.push(`/patients/${id}`);
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const data = {
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     };
 
-    fetch(`${baseUrl}/patients/${id}`, {
+    fetch(`http://localhost:9292/patients/${id}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
-    history.push(`/patients/${id}`)
+      .then(r => r.json())
+      .then(data => onUpdatePatient(data))
+    
+    history.push(`/patients/${id}`);
   };
 
   if (loading) {
@@ -65,17 +71,17 @@ const EditPatient = () => {
           <label htmlFor="first-name">First Name: </label>
           <input
             type="text"
-            name="first-name"
-            id="first-name"
-            value={formData.firstName}
+            name="first_name"
+            id="first_name"
+            value={formData.first_name}
             onChange={handleChange}
           />{" "}
           <label htmlFor="last-name">Last Name: </label>
           <input
             type="text"
-            name="last-name"
-            id="last-name"
-            value={formData.lastName}
+            name="last_name"
+            id="last_name"
+            value={formData.last_name}
             onChange={handleChange}
           />
           <br />
@@ -100,9 +106,9 @@ const EditPatient = () => {
           <label htmlFor="phoneNumber">Phone Number: </label>
           <input
             type="text"
-            name="phoneNumber"
-            id="phoneNumber"
-            value={formData.phoneNumber}
+            name="phone_number"
+            id="phone_number"
+            value={formData.phone_number}
             onChange={handleChange}
           />
           <br />
@@ -117,13 +123,15 @@ const EditPatient = () => {
         </div>
         <br />
         <input type="submit" value="Update" />
+        <button type="button" onClick={handleCancelClick}>
+          Cancel
+        </button>
       </form>
     </div>
   );
 };
 
 export default EditPatient;
-
 
 // NOTES -----------------------------------------------------
 
@@ -133,12 +141,12 @@ export default EditPatient;
 
 // When the EditPatient form is submitted, make a PATCH request to /patients/:id with an object update of the request:
 // {
-//   "patient": { 
-          // {
-              //  "first_name": "edited first name"
-              //  "last_name": "edited last name"
-              //  "birthday": "edited birthday"
-          // }
+//   "patient": {
+// {
+//  "first_name": "edited first name"
+//  "last_name": "edited last name"
+//  "birthday": "edited birthday"
+// }
 //   }
 // }
 

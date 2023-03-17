@@ -1,13 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-const SearchMedication = ({ handleSearch }) => {
-  const [query, setQuery] = useState("");
-
-  const handleChange = (e) => {
-    setQuery(e.target.value)
-    handleSearch(query)
-  };
-
+const SearchMedication = ({onQueryChange, query}) => {
   return (
     <div className="searchbar">
       <label htmlFor="search"></label>
@@ -17,7 +10,8 @@ const SearchMedication = ({ handleSearch }) => {
         name="search"
         placeholder="Search..."
         value={query}
-        onChange={handleChange} />
+        onChange={e => onQueryChange(e.target.value)}
+      />
     </div>
   )
 }

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import ErrorPage from "./components/ErrorPage";
-import LoginForm from "./components/LoginForm";
 import PatientList from "./components/PatientList";
 import PatientDetails from "./components/PatientDetails";
 import NewPatient from "./components/NewPatient";
@@ -13,78 +12,157 @@ import MedicationDetails from "./components/MedicationDetails";
 import EditPatient from "./components/EditPatient";
 
 const App = () => {
-  const [user, setUser] = useState({ name: "", email: "" });
-  const [error, setError] = useState("");
+  const [patients, setPatients] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const adminUser = {
-    email: "admin@admin.com",
-    password: "admin123",
-  };
-
-  const Login = (details) => {
-    if (
-      details.email === adminUser.email &&
-      details.password === adminUser.password
-    ) {
-      console.log("Logged in!");
-      setUser({
-        name: details.name,
-        email: details.email,
+  useEffect(() => {
+    fetch(`http://localhost:9292/patients`)
+      .then((r) => r.json())
+      .then((data) => {
+        setPatients(data);
+        setLoading(false);
       });
-    } else setError("Details do not match!");
+  }, []);
+
+  if (loading) return <h2>Loading...</h2>;
+  if (!patients) return null;
+
+  const handleAddPatient = (newPatient) => {
+    const updatedPatients = [...patients, newPatient];
+    setPatients(updatedPatients);
   };
 
-  const Logout = () => {
-    console.log("Logged out!");
-    setUser({ name: "", email: "" });
+  const handleDeletePatient = (id) => {
+    const updatedPatients = patients.filter((patient) => patient.id !== id);
+    setPatients(updatedPatients);
   };
+
+  const handleUpdatePatient = (updatedPatientObject) => {
+    // eslint-disable-next-line array-callback-return
+    const updatedPatients = patients.map((patient) => {
+      if (patient.id === updatedPatientObject.id) {
+        return updatedPatientObject;
+      }
+    });
+    setPatients(updatedPatients);
+  };
+
+  const handleSearchChange = (newSearch) => {
+    setSearch(newSearch)
+  };
+
+  const displayedPatients = patients.filter((patient) =>
+    patient.first_name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="App">
-      {user.email !== "" ? (
-        <div>
-          <h2>
-            Welcome, <span>{user.name}</span>
-          </h2>
-          <button onClick={Logout}>Logout</button>
-          <br />
-          <Router>
-            <NavBar />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/patients" component={PatientList} />
-              <Route exact path="/patients/new" component={NewPatient} />
-              <Route exact path="/patients/:id/edit" component={EditPatient} />
-              <Route exact path="/patients/:id" component={PatientDetails} /> 
-              <Route exact path="/medications" component={MedicationList} />
-              <Route
-                exact
-                path="/patients/:patientId/medications/new"
-                component={NewMedication}
-              />
-              <Route
-                exact
-                path="/medications/:id"
-                component={MedicationDetails}
-              />
-              <Route component={ErrorPage} />
-            </Switch>
-          </Router>
-        </div>
-      ) : (
-        <div>
-          <h1>Daily Dose</h1>
-          <h3>Patient & Medication Management for Pharmacists</h3>
-          <br />
-          <LoginForm Login={Login} error={error} />
-        </div>
-      )}
+      <Router>
+        <NavBar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/patients">
+            <PatientList
+              patients={displayedPatients}
+              search={search}
+              onPatientDelete={handleDeletePatient}
+              onSearchChange={handleSearchChange}
+            />
+          </Route>
+          <Route exact path="/patients/new">
+            <NewPatient onAddPatient={handleAddPatient} />
+          </Route>
+          <Route exact path="/patients/:id/edit">
+            <EditPatient onUpdatePatient={handleUpdatePatient} />
+          </Route>
+          <Route exact path="/patients/:id">
+            <PatientDetails />
+          </Route>
+          <Route exact path="/medications">
+            <MedicationList />
+          </Route>
+          <Route exact path="/patients/:patientId/medications/new">
+            <NewMedication />
+          </Route>
+          <Route exact path="/medications/:id">
+            <MedicationDetails />
+          </Route>
+          <Route component={ErrorPage} />
+        </Switch>
+      </Router>
     </div>
   );
-};
-
+}
 export default App;
 
 
 // NOTES: -------------------------------------------
-// App just handles the login and routing
+
+/* 
+For each feature, think about:
+- Do we need state?
+    - Where should that state live? 
+- What props do I need?
+- How can I pass data to the components that need it?
+*/
+
+
+/* 
+edit patient functionality:
+- Do we need state?
+    - Where should that state live? 
+- What props do I need?
+- How can I pass data to the components that need it?
+*/
+
+/* patient search functionality:
+- Do we need state? Yes, input field search bar. we need to capture values in input field.
+    - Where should that state live? what components need access to this state?
+      * showing info in the input field.
+      * showing what patients will be displayed down below.
+        1. the search bar is rendered on PatientList. 
+        2. PatientList is rendered on App. 
+        3. Lift state up to common ancestor -- App. 
+- What props do I need?
+- How can I pass data to the components that need it?
+*/
+
+// line 65 shorthand for this:
+  // const handleSearchChange = (newSearch) => {
+  //   setSearch(newSearch)
+  // };
+
+
+
+// HELPER FUNCTIONS:
+  // const handleAddPatient = (newPatient) => {
+  //   const updatedPatients = [...patients, newPatient];
+  //   setPatients(updatedPatients);
+  // };
+
+  // const handleDeletePatient = (id) => {
+  //   const updatedPatients = patients.filter((patient) => patient.id !== id);
+  //   setPatients(updatedPatients);
+  // };
+
+  // const handleSearchPatient = (term) => {
+  //   const filteredPatientResults = patients.filter((patient) =>
+  //     patient.first_name.toLowerCase().includes(term.toLowerCase())
+  //   );
+  //   setPatients(filteredPatientResults);
+  // };
+
+  // const handleEditPatient = (updatedPatientObject) => {
+  //   const updatedPatients = patients.map((patient) => {
+  //     if (patient.id === updatedPatientObject.id) {
+  //       return updatedPatientObject;
+  //     }
+  //   });
+  //   setPatients(updatedPatients);
+  // };
+
+
+// App handles the login and routing / Also, renders a piece of state [patients]

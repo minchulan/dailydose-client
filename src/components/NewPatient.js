@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { baseUrl } from "../globals";
 
 const initialPatientState = {
   firstName: "",
@@ -13,22 +12,14 @@ const initialPatientState = {
   phoneNumber: "",
 };
 
-const NewPatient = () => {
+const NewPatient = ({onAddPatient}) => {
+
   const [patient, setPatient] = useState(initialPatientState);
   const history = useHistory();
 
-  const handleChange = (e) => {
-    setPatient({
-      ...patient,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleCancelClick = () => {
-    history.push("/patients");
-  };
-
   const addPatient = (e) => {
+    e.preventDefault();
+
     const newPatient = {
       first_name: patient.firstName,
       last_name: patient.lastName,
@@ -40,19 +31,29 @@ const NewPatient = () => {
       phone_number: patient.phoneNumber,
     };
 
-    e.preventDefault();
-
-    fetch(`${baseUrl}/patients`, {
+    fetch(`http://localhost:9292/patients`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newPatient),
     })
-      .then((r) => r.json())
-      .then((data) => console.log(data));
-    history.push("/patients");
+      .then(r => r.json())
+      .then((data) => onAddPatient(data))
+    
+    history.push('/patients')
   };
+  
+    const handleChange = (e) => {
+      setPatient({
+        ...patient,
+        [e.target.name]: e.target.value,
+      });
+    };
+
+    const handleCancelClick = () => {
+      history.push("/patients");
+    };
 
   return (
     <>
@@ -91,7 +92,6 @@ const NewPatient = () => {
         <br />
         <label htmlFor="gender">Gender (at birth): </label>
         <select name="gender">
-          <option></option>
           <option value={patient.gender}>Male</option>
           <option value={patient.gender}>Female</option>
         </select>
@@ -150,7 +150,8 @@ const NewPatient = () => {
 export default NewPatient;
 
 // NOTES: ---------------------------------------------------------------------
-
+// line 39:     // this should be enough to insert something to database (after passing validation).
+    // when it's done, send me away to the patientList page. 
 // if (
 //   [
 //     patient.firstName,

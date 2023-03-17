@@ -1,12 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const SearchPatient = ({ handleSearchPatient }) => {
-    const [query, setQuery] = useState("");
-
-    const handleChange = (e) => {
-        setQuery(e.target.value)
-        handleSearchPatient(query)
-    };
+const SearchPatient = ({ onSearchChange, search }) => {
 
     return (
         <div className="searchbar">
@@ -17,8 +11,8 @@ const SearchPatient = ({ handleSearchPatient }) => {
                 name="search"
                 placeholder="Search by first name..."
                 autocomplete="off"
-                value={query}
-                onChange={handleChange}
+                value={search}
+                onChange={e => onSearchChange(e.target.value)}
             />
         </div>
     )

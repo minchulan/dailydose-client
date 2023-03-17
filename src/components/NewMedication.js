@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { baseUrl } from '../globals';
 
 const initialMedicationState = {
   medicationName: "",
@@ -22,7 +21,7 @@ const NewMedication = ({onAddMedication}) => {
   const history = useHistory();
 
   useEffect(() => {
-    fetch(`${baseUrl}/patients/${patientId}`)
+    fetch(`http://localhost:9292/patients/${patientId}`)
       .then(r => r.json())
       .then(data => {
         setPatient(data);
@@ -60,7 +59,7 @@ const NewMedication = ({onAddMedication}) => {
   
     e.preventDefault();
 
-    fetch(`${baseUrl}/patients/${patientId}/medications`, {
+    fetch(`http://localhost:9292/patients/${patientId}/medications`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
