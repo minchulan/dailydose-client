@@ -10,22 +10,21 @@ const initialState = {
   phone_number: "",
 };
 
-const EditPatient = ({ onUpdatePatient }) => {
+const EditPatient = ({ patients, onUpdatePatient }) => {
   const [formData, setFormData] = useState(initialState);
-  const [patient, setPatient] = useState(null);
+  const [patient, setPatient] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const history = useHistory();
 
   useEffect(() => {
-    fetch(`http://localhost:9292/patients/${id}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setPatient(data);
-        setFormData(data);
-        setLoading(false);
-      });
-  }, [id]);
+    if (patients.length > 0) {
+      const currentPatient = patients.find((p) => p.id === parseInt(id));
+      setPatient(currentPatient);
+      setFormData(currentPatient);
+      setLoading(false);
+    }
+  }, [id, patients])
 
   const handleChange = (e) => {
     const key = e.target.name;

@@ -26,15 +26,6 @@ const MedicationDetails = ({ medications }) => {
       setLoading(false);
     }
   }, [id, medications]);
-  
-  // useEffect(() => {
-  //   const loadMedication = () => {
-  //     fetch(`http://localhost:9292/medications/${id}`)
-  //       .then((r) => r.json())
-  //       .then((data) => setMedication(data));
-  //   };
-  //   loadMedication();
-  // }, [id]);
 
   if (loading) return <h2>Loading...</h2>
 

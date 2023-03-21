@@ -46,7 +46,7 @@ const App = () => {
   };
 
   const handleAddMed = (newMedication) => {
-    const updatedMedications = [...medications, newMedication]
+    const updatedMedications = [ newMedication, ...medications]
     setMedications(updatedMedications)
   }
 
