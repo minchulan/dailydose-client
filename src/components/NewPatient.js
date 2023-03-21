@@ -12,8 +12,7 @@ const initialPatientState = {
   phoneNumber: "",
 };
 
-const NewPatient = ({onAddPatient}) => {
-
+const NewPatient = ({ onAddPatient }) => {
   const [patient, setPatient] = useState(initialPatientState);
   const history = useHistory();
 
@@ -38,22 +37,22 @@ const NewPatient = ({onAddPatient}) => {
       },
       body: JSON.stringify(newPatient),
     })
-      .then(r => r.json())
-      .then((data) => onAddPatient(data))
-    
-    history.push('/patients')
-  };
-  
-    const handleChange = (e) => {
-      setPatient({
-        ...patient,
-        [e.target.name]: e.target.value,
-      });
-    };
+      .then((r) => r.json())
+      .then((data) => onAddPatient(data));
 
-    const handleCancelClick = () => {
-      history.push("/patients");
-    };
+    history.push("/patients");
+  };
+
+  const handleChange = (e) => {
+    setPatient({
+      ...patient,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleCancelClick = () => {
+    history.push("/patients");
+  };
 
   return (
     <>
@@ -64,8 +63,8 @@ const NewPatient = ({onAddPatient}) => {
           type="text"
           value={patient.firstName}
           name="firstName"
+          placeholder="First name"
           onChange={handleChange}
-          autoFocus={true}
           required
         />
         <br />
@@ -75,8 +74,8 @@ const NewPatient = ({onAddPatient}) => {
           type="text"
           value={patient.lastName}
           name="lastName"
+          placeholder="Last name"
           onChange={handleChange}
-          autoFocus={true}
           required
         />
         <br />
@@ -122,6 +121,7 @@ const NewPatient = ({onAddPatient}) => {
           id="email"
           type="text"
           name="email"
+          placeholder="name@email.com"
           value={patient.email}
           onChange={handleChange}
           required
@@ -152,18 +152,17 @@ export default NewPatient;
 // NOTES: ---------------------------------------------------------------------
 
 // patients_controller.rb:
-    // post '/patients' do
-    //     @patient = Patient.new(params)
-    //     if @patient.save
-    //         @patient.to_json
-    //     else
-    //         { errors: @patient.errors.full_messages.to_sentences }.to_json 
-    //     end
-    // end
-    
-    
+// post '/patients' do
+//     @patient = Patient.new(params)
+//     if @patient.save
+//         @patient.to_json
+//     else
+//         { errors: @patient.errors.full_messages.to_sentences }.to_json
+//     end
+// end
+
 // line 39:     // this should be enough to insert something to database (after passing validation).
-    // when it's done, send me away to the patientList page. 
+// when it's done, send me away to the patientList page.
 // if (
 //   [
 //     patient.firstName,

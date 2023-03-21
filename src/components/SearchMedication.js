@@ -10,10 +10,11 @@ const SearchMedication = ({onQueryChange, query}) => {
         name="search"
         placeholder="Search..."
         value={query}
-        onChange={e => onQueryChange(e.target.value)}
+        onChange={(e) => onQueryChange(e.target.value)}
       />
+      <hr />
     </div>
-  )
+  );
 }
 
 export default SearchMedication

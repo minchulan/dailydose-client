@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import PatientCard from "./PatientCard";
 import SearchPatient from "./SearchPatient";
 
-const PatientList = ({ patients, onPatientDelete, search, onSearchChange }) => {
+const PatientList = ({ patients, onPatientDelete, search, setSearch, onSearchChange }) => {
 
   const patientCards = patients.map((patient) => (
     <PatientCard
@@ -24,10 +24,10 @@ const PatientList = ({ patients, onPatientDelete, search, onSearchChange }) => {
               pathname: "/patients/new",
             }}
           >
-            + Create
+            + New
           </NavLink>
         </h4>
-      <SearchPatient search={search} onSearchChange={onSearchChange} />
+      <SearchPatient search={search} setSearch={setSearch} onSearchChange={onSearchChange} />
         <h4>{patientCards}</h4>
       </div>
   );

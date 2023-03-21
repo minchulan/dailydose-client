@@ -13,37 +13,31 @@ const initialMedicationState = {
   imageUrl: ""
 };
 
-const NewMedication = ({onAddMedication}) => {
-  const [patient, setPatient] = useState(null);
+const NewMedication = ({ patients, onAddMed }) => {
+  const [patient, setPatient] = useState({
+    first_name: "",
+    last_name: "",
+    birthday: "",
+    gender: "",
+    allergies: "",
+    address: "",
+    email: "",
+    phone_number: "",
+  });
+
   const [med, setMed] = useState(initialMedicationState);
-  const [loading, setLoading] = useState(true);
-  const { patientId } = useParams();
   const history = useHistory();
+  const { patientId } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:9292/patients/${patientId}`)
-      .then(r => r.json())
-      .then(data => {
-        setPatient(data);
-        setLoading(false);
-    })
-  }, [patientId])
-
-  if (loading) { <h2>Loading...</h2> };
-
-  const handleChange = (e) => {
-    setMed({
-      ...med,
-      [e.target.name]: e.target.value
-    })
-  };
-
-  const handleCancelClick = (e) => {
-    e.preventDefault();
-    history.push(`/patients`);
-  };
+    if (patients.length > 0) {
+      const currentPatient = patients.find((patient) => patient.id === parseInt(patientId))
+      setPatient(currentPatient)
+    }
+  }, [patientId, patients])
 
   const addMedication = (e) => {
+    e.preventDefault();
 
     const newMedication = {
       medication_name: med.medicationName,
@@ -56,8 +50,6 @@ const NewMedication = ({onAddMedication}) => {
       details: med.details,
       image_url: med.imageUrl,
     };
-  
-    e.preventDefault();
 
     fetch(`http://localhost:9292/patients/${patientId}/medications`, {
       method: "POST",
@@ -67,13 +59,27 @@ const NewMedication = ({onAddMedication}) => {
       body: JSON.stringify(newMedication)
     })
       .then(r => r.json())
-      .then(data => onAddMedication(data))
+      .then(data => onAddMed(data))
       history.push(`/patients/${patientId}`)
   };
 
+    const handleChange = (e) => {
+      setMed({
+        ...med,
+        [e.target.name]: e.target.value,
+      });
+    };
+  
+  const handleCancelClick = (e) => {
+    e.preventDefault();
+    history.push(`/patients/${patientId}`);
+  };
+  
+
   return (
     <div>
-      <h2>Create Medication for </h2>
+      <hr />
+      <h3>Create Medication for {patient.first_name} {patient.last_name} </h3>
       <form onSubmit={addMedication}>
         <div>
           <label htmlFor="medicationName">Name: </label>
@@ -184,18 +190,8 @@ const NewMedication = ({onAddMedication}) => {
 }
 
 export default NewMedication
-
-
-// NOTES: -----------------------------------------------------
-
-// persist new medication on server
-// then use onAddMedication to add medication to state 
-
-  
-  // /* <h2>Create Medication{patient.first_name} {patient.last_name}</h2> */ LINE 77 ERROR
-
-  // history.push works....
-  // how to pass up callback function to parent component NavLink ???
-        // .then((r) => r.json())
-      // .then(data => onAddMedication(data))
       
+
+// NOTES:----------------------------
+    // line 81: 
+       // < h2 > Create Medication for { patient.firstName } { patient.lastName } </>

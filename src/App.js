@@ -13,8 +13,8 @@ import EditPatient from "./components/EditPatient";
 import Breadcrumbs from "./components/Breadcrumbs";
 
 const App = () => {
-  const [patients, setPatients] = useState([]);
-  const [medications, setMedications] = useState([])
+  const [patients, setPatients] = useState([]); 
+  const [medications, setMedications] = useState([]) 
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -36,15 +36,23 @@ const App = () => {
         });
     }, []);
 
-
   if (loading) return <h2>Loading...</h2>;
   if (!patients) return null;
+  if (!medications) return null;
 
   const handleAddPatient = (newPatient) => {
     const updatedPatients = [...patients, newPatient]
-    setPatients(updatedPatients).sort((a, b) =>
-      a.first_name.localeCompare(b.first_name)
-    );
+    setPatients(updatedPatients)
+  };
+
+  const handleAddMed = (newMedication) => {
+    const updatedMedications = [...medications, newMedication]
+    setMedications(updatedMedications)
+  }
+
+  const handleDeleteMedication = (id) => {
+    const updatedMedications = medications.filter((medication) => medication.id !== id)
+    setMedications(updatedMedications);
   };
 
   const handleDeletePatient = (id) => {
@@ -57,7 +65,7 @@ const App = () => {
       if (patient.id === updatedPatientObject.id) {
         return updatedPatientObject;
       } else {
-        return patient
+        return patient;
       }
     });
     setPatients(updatedPatients);
@@ -83,6 +91,7 @@ const App = () => {
             <PatientList
               patients={displayedPatients}
               search={search}
+              setSearch={setSearch}
               onPatientDelete={handleDeletePatient}
               onSearchChange={handleSearchChange}
             />
@@ -91,16 +100,29 @@ const App = () => {
             <NewPatient onAddPatient={handleAddPatient} />
           </Route>
           <Route path="/patients/:id/edit">
-            <EditPatient onUpdatePatient={handleUpdatePatient} />
+            <EditPatient
+              patients={patients}
+              onUpdatePatient={handleUpdatePatient}
+            />
           </Route>
           <Route exact path="/patients/:id">
-            <PatientDetails patients={patients} />
+            <PatientDetails
+              patients={patients}
+              medications={medications}
+              onDeleteMedication={handleDeleteMedication}
+            />
           </Route>
           <Route exact path="/medications">
-            <MedicationList medications={medications} setMedications={setMedications} />
+            <MedicationList
+              medications={medications}
+              setMedications={setMedications}
+            />
           </Route>
           <Route path="/patients/:patientId/medications/new">
-            <NewMedication />
+            <NewMedication
+              patients={patients}
+              onAddMed={handleAddMed}
+            />
           </Route>
           <Route path="/medications/:id">
             <MedicationDetails medications={medications} />
