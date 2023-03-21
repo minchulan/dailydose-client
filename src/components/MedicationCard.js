@@ -22,22 +22,4 @@ const MedicationCard = ({ medication, patient, onMedicationDelete}) => {
   );
 };
 
-export default MedicationCard;
-
-// NOTES: -----------------------------------------------------
-
-// medications_controller.rb:
-    // delete '/medications/:id' do
-    //     @medication = Medication.find_by_id(params[:id])
-    //     if @medication
-    //         @medication.destroy
-    //     else
-    //         { errors: ["Medication Doesn't Exist"] }.to_json
-    //     end
-    // end
-    
-    
-    // get '/medications/:id' do
-    //   @medication = Medication.find_by_id(params[:id])
-    //   @medication.to_json(include: [:patient])
-    // end
+export default MedicationCard

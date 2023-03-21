@@ -191,8 +191,3 @@ const NewMedication = ({ patients, onAddMed }) => {
 }
 
 export default NewMedication
-      
-
-// NOTES:----------------------------
-    // line 81: 
-       // < h2 > Create Medication for { patient.firstName } { patient.lastName } </>

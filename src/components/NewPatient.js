@@ -147,33 +147,4 @@ const NewPatient = ({ onAddPatient }) => {
   );
 };
 
-export default NewPatient;
-
-// NOTES: ---------------------------------------------------------------------
-
-// patients_controller.rb:
-// post '/patients' do
-//     @patient = Patient.new(params)
-//     if @patient.save
-//         @patient.to_json
-//     else
-//         { errors: @patient.errors.full_messages.to_sentences }.to_json
-//     end
-// end
-
-// line 39:     // this should be enough to insert something to database (after passing validation).
-// when it's done, send me away to the patientList page.
-// if (
-//   [
-//     patient.firstName,
-//     patient.lastName,
-//     patient.birthday,
-//     patient.allergies,
-//     patient.address,
-//   ].some((val) => val.trim() === "")
-// )
-//   alert("Please fill in all of the information!");
-
-// set up as a controlled form. when form submits, should be able to console log all the text fields.
-// persist new patient on server. need to send server specifically formatted object.
-// then use onAddPatient callback function to pass the new patient we get back from the server up to the parent component so we can add that new patient to state.
+export default NewPatient

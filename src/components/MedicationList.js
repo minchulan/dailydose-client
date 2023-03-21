@@ -39,16 +39,3 @@ const MedicationList = ({ medications, setMedications }) => {
 };
 
 export default MedicationList;
-
-// NOTES --------------------------------------------------------
-
-//medications_controller.rb:
-// get '/medications' do
-//     @medications = Medication.all.order(:medication_name).limit(10)
-//     @medications.to_json(include: [:patient], except: [:created_at, :updated_at])
-// end
-
-// const handleAddMedication = (newMedication) => {
-//   const updatedMedications = [...medications, newMedication]
-//   setMedications(updatedMedications);
-// };
