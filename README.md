@@ -1,6 +1,6 @@
 ## Daily Dose - Frontend
 
-Welcome to Daily Dose, a patient and medication management system for cannabis practitioners. Daily Dose is a fullstack web app built with ReactJS frontend and Sinatra-Ruby backend. The focus of this project is building a Sinatra API backend that uses Active Record to access and persist data in a database, which will be used by a separate React frontend that interacts with the database via the API. The frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Check out my backend: [Link to Backend Repo](https://github.com/minchulan/phase-3-sinatra-react-project)
+Welcome to Daily Dose, a patient and medication management system for cannabis practitioners. Daily Dose is a fullstack web app built with ReactJS frontend and Sinatra-Ruby backend. The focus of this project is building a Sinatra API backend that uses Active Record to access and persist data in a database, which will be used by a separate React frontend that interacts with the database via the API. The frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Check out my backend: [Link to Backend Repo](https://github.com/minchulan/dailydose-server)
 
 [MIT](https://choosealicense.com/licenses/mit/)
 

@@ -31,7 +31,7 @@ const MedicationDetails = ({ medications }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    history.push('/medications')
+    history.go(-1);
   }
 
   return (

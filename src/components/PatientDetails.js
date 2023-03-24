@@ -31,7 +31,7 @@ import { NavLink } from "react-router-dom";
 
   const handleClick = (e) => {
     e.preventDefault();
-    history.push(`/patients`)
+    history.push('/patients');
   }
 
   const deleteMedication = (id) => {
